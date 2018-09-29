@@ -2,15 +2,26 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css"  href="./css/reset.css" />
+    <link rel="stylesheet" type="text/css"  href="./css/app.css" />
     <title>Fatal Start</title>
     <style>
   * { padding: 0; margin: 0; }
   canvas { background: #eee; display: block; margin: 0 auto; }
+
 </style>
   </head>
 
-  <body>
+  <body >
+    <header class='header'>
+      <p class='header-fatal'>Fatal</p>
+      <p class=header-start>Start</p>
+    </header>
     <canvas id="canvas" width="600" height='800'></canvas>
+    <audio controls>
+      <source src='assets/rock_the_dragon.mp3' type ='audio/mpeg'>
+    </audio>
     <script src="lib/keymaster.js"></script>
     <script type="application/javascript" src="lib/bundle.js"></script>
 

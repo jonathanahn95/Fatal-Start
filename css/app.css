@@ -1,0 +1,16 @@
+.header {
+  font-family: Saiyan Sans;
+  display: flex;
+  font-size: 68px;
+  justify-content: center;
+}
+
+.header-fatal {
+  color: yellow;
+  padding: 15px 18px 0 0;
+}
+
+.header-start {
+  color: red;
+  padding-top: 15px;
+}
