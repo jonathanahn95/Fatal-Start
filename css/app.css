@@ -3,14 +3,129 @@
   display: flex;
   font-size: 68px;
   justify-content: center;
+  background-color: rgb(181, 159, 127);
 }
+
 
 .header-fatal {
   color: yellow;
-  padding: 15px 18px 0 0;
+  padding: 10px 18px 0 150px;
 }
+
+
+.head-ul-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.head-ul {
+  display: flex;
+  font-family: Saiyan Sans;
+  font-size: 34px;
+  color: black;
+  /* flex-direction: column; */
+}
+
+
+
+
 
 .header-start {
   color: red;
   padding-top: 15px;
+}
+
+
+html {
+  background-color: rgb(181, 159, 127);
+  /* background-image: url('../assets/piskwall.png'); */
+  /* background-size: contain; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#canvas {
+  border-radius: 5px;
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.links {
+  /* padding-right: 200px; */
+  list-style: none;
+  font-family: Saiyan Sans;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 40px;
+
+}
+
+.links li {
+  color: red;
+  background: yellow;
+  min-height: 150px;
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+  border-radius: 100%;
+  align-items: center;
+  font-size: 30px;
+}
+
+.git {
+  color: red;
+  background: yellow;
+  min-height: 150px;
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+  border-radius: 100%;
+  align-items: center;
+  font-size: 30px;
+}
+
+
+.ul {
+  padding: 0 15px;
+
+}
+.instructions {
+  color: black;
+  font-family: Saiyan Sans;
+  background: yellow;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 40px;
+
+}
+.h3 {
+  padding-top: 15px;
+  font-family: Saiyan Sans;
+  color: red;
+  font-size: 48px;
+}
+
+.list {
+  font-size: 30px;
+  list-style: none;
+}
+
+/* .left-container {
+  width: 20%;
+} */
+
+.sound {
+  border-radius: 100%;
+  width: 20%
 }
