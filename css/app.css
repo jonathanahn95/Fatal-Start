@@ -7,9 +7,12 @@
 }
 
 
+
 .header-fatal {
   color: yellow;
   padding: 10px 18px 0 150px;
+  letter-spacing: 1px;
+
 }
 
 
@@ -24,6 +27,8 @@
   font-family: Saiyan Sans;
   font-size: 34px;
   color: black;
+  letter-spacing: 1px;
+
   /* flex-direction: column; */
 }
 
@@ -34,6 +39,8 @@
 .header-start {
   color: red;
   padding-top: 15px;
+  letter-spacing: 1px;
+
 }
 
 
@@ -59,6 +66,8 @@ html {
   list-style: none;
   font-family: Saiyan Sans;
   min-height: 550px;
+  letter-spacing: 1.5px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -114,11 +123,14 @@ html {
   font-family: Saiyan Sans;
   color: red;
   font-size: 48px;
+  letter-spacing: 1.5px;
+
 }
 
 .list {
   font-size: 30px;
   list-style: none;
+  letter-spacing: 1px;
 }
 
 /* .left-container {
