@@ -1,3 +1,4 @@
+
 .header {
   font-family: Saiyan Sans;
   display: flex;
@@ -94,6 +95,7 @@ html {
   min-height: 150px;
   min-width: 150px;
   display: flex;
+  flex-direction:  column;
   justify-content: center;
   border-radius: 100%;
   align-items: center;
