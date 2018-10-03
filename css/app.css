@@ -2,7 +2,7 @@
 .header {
   font-family: Saiyan Sans;
   display: flex;
-  font-size: 68px;
+  font-size: 58px;
   justify-content: center;
   background-color: rgb(181, 159, 127);
 }
@@ -47,14 +47,15 @@
 
 html {
   background-color: rgb(181, 159, 127);
-  /* background-image: url('../assets/piskwall.png'); */
-  /* background-size: contain; */
+  /* background-image: url('../assets/kame.jpg'); */
+  /* background-size: cover; */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 #canvas {
   border-radius: 5px;
+
 }
 .main {
   display: flex;
@@ -91,15 +92,15 @@ html {
 
 .git {
   color: red;
-  background: yellow;
-  min-height: 150px;
-  min-width: 150px;
-  display: flex;
-  flex-direction:  column;
-  justify-content: center;
-  border-radius: 100%;
-  align-items: center;
-  font-size: 30px;
+      background: yellow;
+      min-height: 90px;
+      min-width: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 100%;
+      align-items: center;
+      font-size: 20px;
 }
 
 

@@ -101,21 +101,21 @@ class Background {
     this.image = new Image();
     this.image.src = 'assets/wall.jpg';
     this.image.onload = () => {
-      ctx.drawImage(this.image, 0, 0, 600, 800);
+      ctx.drawImage(this.image, 0, 0, 1000, 800);
     };
     this.frames = 0;
   }
 
   draw(ctx) {
 
-    if (this.frames >= 600){
+    if (this.frames >= 1000){
       this.frames = 0;
     }
     this.frames += 6;
     // ctx.drawImage(this.image,0,  -this.frames,600, 800);
     // ctx.drawImage(this.image,0,600 - this.frames, 600, 800);
 
-    ctx.drawImage(this.image,0, 0, 600, 800);
+    ctx.drawImage(this.image,0, 0, 1000, 800);
 
   }
 
@@ -137,6 +137,8 @@ class Background {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dragon_ball__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dragon_ball */ "./lib/dragon_ball.js");
 /* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./lib/util.js");
+
 
 
 
@@ -148,7 +150,13 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
       this.pos = options.pos;
       this.vel = options.vel;
       this.ctx = options.ctx;
+      this.isWrappable = false;
       this.game = options.game;
+      this.image = new Image();
+      this.image.src = 'assets/blast.jpg';
+      this.image.onload= () => {
+        this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
+      };
     }
 
     move(){
@@ -157,23 +165,15 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     }
 
     draw(ctx) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc( this.pos[0], this.pos[1], this.radius, 0, 2*Math.PI, true);
-      ctx.fillStyle = "red";
-      ctx.fill();
-      ctx.restore();
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
     }
 
-
     remove(){
-      debugger
       this.game.remove(this);
     }
 
 
     collideWith(otherObj) {
-      debugger
       otherObj.remove();
     }
 }
@@ -208,6 +208,7 @@ const DEFAULTS = {
 class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]  {
   constructor(options){
     super(options);
+    this.isWrappable = false;
     this.image = new Image();
     this.image.src = 'assets/pix-drag.png';
     this.image.onload= () => {
@@ -216,8 +217,10 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
   }
 
   draw(ctx) {
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 160, 160);
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 120, 120);
   }
+
+
 
   collideWith(otherObj) {
     otherObj.remove();
@@ -266,7 +269,7 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/freeza.jpg';
+    this.image.src = 'assets/buu.jpg';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -279,18 +282,16 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   }
 
   draw(ctx) {
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 250, 250);
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 650, 650);
   }
 
   remove(){
-    debugger
     this.game.remove(this);
   }
 
 
   collideWith(otherObj) {
-      debugger
-      otherObj.remove();
+    otherObj.remove();
   }
 
 
@@ -389,13 +390,25 @@ class Game {
     this.ctx = ctx;
     this.initialSetup();
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
+    this.audio = new Audio();
+    this.audio.src = './assets/rock_the_dragon.mp3';
+    this.bindKeyHandlers();
   }
 
+  bindKeyHandlers(){
+    key('p', () => {
+   if (this.audio.paused) {
+     this.audio.play();
+   } else {
+     this.audio.pause();
+   }
+ });
+  }
 
   initialSetup() {
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
-    this.players.push(new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [300,600], game: this, ctx: this.ctx} ));
+    this.players.push(new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,550], game: this, ctx: this.ctx} ));
     this.addEnemies();
   }
 
@@ -439,21 +452,20 @@ class Game {
   }
 
   remove(obj) {
-    debugger
     if (obj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]) {
       this.dragonBalls.splice(this.dragonBalls.indexOf(obj), 1);
       this.score.score += 1;
     } else if (obj instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]) {
-      debugger
       this.enemies.splice(this.enemies.indexOf(obj), 1);
-      debugger
     } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"]) {
-      debugger
       this.bullets.splice(this.bullets.indexOf(obj), 1);
-      debugger
-
     }
   }
+
+  isOutOfBounds(pos) {
+   return (pos[0] < 0) || (pos[1] < 0) ||
+     (pos[0] > this.width) || (pos[1] > this.height);
+ }
 
   allObjects() {
     return [].concat(this.players, this.dragonBalls, this.bullets, this.enemies);
@@ -480,14 +492,14 @@ class Game {
 
 
   spawnDragonBalls() {
-    if ( this.dragonBalls.length <= 2 ) {
+    if ( this.dragonBalls.length <= 0 ) {
       this.addDragonBalls();
     }
   }
 
   wrap(pos) {
     return [
-      Object(_util__WEBPACK_IMPORTED_MODULE_0__["wrap"])(pos[0], 600), Object(_util__WEBPACK_IMPORTED_MODULE_0__["wrap"])(pos[1], 800)
+      Object(_util__WEBPACK_IMPORTED_MODULE_0__["wrap"])(pos[0], 900), Object(_util__WEBPACK_IMPORTED_MODULE_0__["wrap"])(pos[1], 800)
     ];
   }
 
@@ -562,6 +574,7 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
     super(options);
     this.ctx = options.ctx;
     this.sX = 0;
+    this.isWrappable = false;
     this.game = options.game;
     this.image = new Image();
     this.image.src = 'assets/flying_goku.png';
@@ -575,25 +588,25 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
   bindKeyHandlers() {
     key('w', () => {
       this.vel = [0, -6];
-      // this.pos[1] -= 10;
+      // this.pos[1] -= 40;
       this.move();
     });
 
     key('s', () => {
       this.vel = [0, 6];
-      // this.pos[1] += 10;
+      // this.pos[1] += 40;
       this.move();
     });
 
     key('a', () => {
       this.vel = [-6, 0];
-      // this.pos[0] -= 10;
+      // this.pos[0] -= 40;
       this.move();
     });
 
     key('d', () => {
       this.vel = [6, 0];
-      // this.pos[0] += 10;
+      // this.pos[0] += 40;
 
       this.move();
     });
@@ -630,7 +643,7 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
       window.frames = 0;
     }
 
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 250, 250);
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 150, 150);
   }
 
 
@@ -673,12 +686,13 @@ const DEFAULTS = {
 class MovingObject {
   constructor(options) {
     this.pos = options.pos;
-    this.vel = options.vel || [(1 * Math.random()), (Math.random() * 1.5)];
+    this.vel = options.vel || _util__WEBPACK_IMPORTED_MODULE_0__["randomVec"](2);
     this.radius = options.radius || DEFAULTS.RADIUS;
     this.color = DEFAULTS.COLOR;
     this.game = options.game;
     this.ctx = options.ctx;
     this.sX = 0;
+    this.isWrappable = true;
   }
 
   draw(ctx) {
@@ -688,6 +702,13 @@ class MovingObject {
   move(){
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
+    if (this.game.isOutOfBounds(this.pos)) {
+       if (this.isWrappable) {
+         this.pos = this.game.wrap(this.pos);
+       } else {
+         this.remove();
+       }
+     }
   }
 
   isCollidedWith(otherObj) {
@@ -698,7 +719,7 @@ class MovingObject {
    collideWith(otherObj) {
      otherObj.remove();
    }
-   
+
 }
 
 
@@ -739,28 +760,30 @@ class Score {
 /*!*********************!*\
   !*** ./lib/util.js ***!
   \*********************/
-/*! exports provided: randomPosition, wrap, dist */
+/*! exports provided: randomVec, scale, randomPosition, wrap, dist */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomVec", function() { return randomVec; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scale", function() { return scale; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomPosition", function() { return randomPosition; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wrap", function() { return wrap; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dist", function() { return dist; });
 
 /// in charge of giving direction
-// export const randomVec = (length) => {
-//   const deg = 2 * Math.PI * Math.random();
-//   return scale([Math.sin(deg), Math.cos(deg)], length);
-// };
+const randomVec = (length) => {
+  const deg = 2 * Math.PI * Math.random();
+  return scale([Math.sin(deg), Math.cos(deg)], length);
+};
 //
 // export const test = function() {
 //   console.log("Hello");
 // };
 //
-// export const scale = (vec, m) => {
-//   return [vec[0] * m, vec[1] * m];
-// };
+const scale = (vec, m) => {
+  return [vec[0] * m, vec[1] * m];
+};
 //
 // // Normalize the length of the vector to 1, maintaining direction.
 // export const dir = vec => {
@@ -785,7 +808,7 @@ const randomPosition = (maxX, maxY) => {
 
 const wrap = (coord, max) => {
   if (coord < 0){
-    return max - (coord % max);
+    return 900;
   } else if (coord > max) {
     return coord % max;
   } else {
