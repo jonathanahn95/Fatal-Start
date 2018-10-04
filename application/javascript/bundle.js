@@ -255,8 +255,8 @@ __webpack_require__.r(__webpack_exports__);
 class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
     options.radius = 60;
-    options.vel = [0.7, 0.7];
     super(options);
+    this.vel = options.vel;
     this.ctx = options.ctx;
     this.pos = options.pos;
     this.sX = 0;
@@ -270,7 +270,7 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.goku = options.goku;
     this.bindKeyHandlers();
     this.sX = 0;
-
+    debugger
   }
 
   bindKeyHandlers() {
@@ -452,6 +452,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./bullet */ "./lib/bullet.js");
 /* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
 /* harmony import */ var _hp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./hp */ "./lib/hp.js");
+/* harmony import */ var _instructions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./instructions */ "./lib/instructions.js");
+
 
 
 
@@ -465,7 +467,9 @@ __webpack_require__.r(__webpack_exports__);
 
 class Game {
   constructor(ctx){
+    this.ctx = ctx;
     this.background = new _background__WEBPACK_IMPORTED_MODULE_5__["default"](ctx);
+    this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_10__["default"](ctx);
     this.players = [];
     this.enemies = [];
     this.dragonBalls = [];
@@ -475,7 +479,6 @@ class Game {
     this.height = 600;
     this.NUM_DRAGON_BALLS = 4;
     this.NUM_ENEMIES = 2;
-    this.ctx = ctx;
     this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,550], game: this, ctx: this.ctx} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.initialSetup();
@@ -497,6 +500,7 @@ class Game {
 
   initialSetup() {
     this.ctx.clearRect(0,0, 800, 800);
+    this.instructions.draw(this.ctx);
     this.addDragonBalls();
     this.players.push(this.goku);
     this.addEnemies();
@@ -510,9 +514,24 @@ class Game {
 
   addEnemies() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku }) );
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
     }
   }
+
+  addEnemiesLevelTwo() {
+    debugger
+    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.1,0.1] }) );
+    }
+  }
+  addEnemiesLevelThree() {
+    debugger
+    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [2.1,2.1] }) );
+    }
+  }
+
+
 
 
   checkCollisions() {
@@ -574,7 +593,8 @@ class Game {
   }
 
   draw() {
-    this.ctx.clearRect(0,0, 800, 800);
+    // this.ctx.clearRect(0,0, 800, 800);
+    this.instructions.draw(this.ctx);
     this.background.draw(this.ctx);
     this.hp.draw(this.ctx);
     this.score.draw(this.ctx);
@@ -585,21 +605,28 @@ class Game {
   }
 
   step() {
-    if (this.score.score != 5) {
+    if (this.score.score <= 5) {
       this.checkCollisions();
       this.spawnDragonBalls();
       this.spawnEnemies();
       this.allObjects().forEach( obj => {
         obj.move();
       });
-    } else {
+    } else if (this.score.score <= 10) {
         this.checkCollisions();
         this.spawnDragonBalls();
         this.spawnEnemiesLevelTwo();
         this.allObjects().forEach( obj => {
           obj.move();
-    });
-  }
+      });
+    } else {
+      this.checkCollisions();
+      this.spawnDragonBalls();
+      this.spawnEnemiesLevelThree();
+      this.allObjects().forEach( obj => {
+        obj.move();
+      });
+    }
   }
 
 
@@ -616,10 +643,15 @@ class Game {
   }
 
   spawnEnemiesLevelTwo() {
-    this.enemies.forEach( enemy => {
-        enemy.vel[0] += 1;
-        enemy.vel[1] += 1;
-    });
+    if (this.enemies.length <= 0 ) {
+      this.addEnemiesLevelTwo();
+    }
+  }
+
+  spawnEnemiesLevelThree() {
+    if (this.enemies.length <= 0 ) {
+      this.addEnemiesLevelThree();
+    }
   }
 
   wrap(pos) {
@@ -644,6 +676,7 @@ class Game {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+
 class GameView {
   constructor(game, ctx){
     this.game = game;
@@ -822,7 +855,7 @@ class Hp {
   draw(ctx) {
 
     // if (this.player.lives === 1) {
-      ctx.fillText("HP: "+this.player.lives , 750, 40);
+        ctx.fillText("HP: "+this.player.lives , 750, 40);
     //   ctx.fillRect(770,20,150,100);
     // } else {
     //   ctx.fillText("HP: "+this.player.lives , 750, 40);
@@ -838,6 +871,38 @@ class Hp {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Hp);
+
+
+/***/ }),
+
+/***/ "./lib/instructions.js":
+/*!*****************************!*\
+  !*** ./lib/instructions.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+class Instructions {
+  constructor(ctx){
+    this.ctx = ctx;
+  }
+  draw(ctx) {
+    // debugger
+    // console.log("ASD")
+    ctx.fillText("dragonbalasdasdasdsaasds: " , 125, 40);
+    ctx.font = "36px arial";
+    ctx.fillStyle = "yellow";
+  }
+
+
+
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Instructions);
 
 
 /***/ }),
@@ -931,7 +996,7 @@ class Score {
   draw(ctx) {
 
     ctx.fillText("dragonballs: "+this.score , 15, 40);
-    ctx.font = "36px Saiyan Sans";
+    ctx.font = "36px arial";
     ctx.fillStyle = "yellow";
   }
 }
