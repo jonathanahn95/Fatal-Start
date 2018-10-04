@@ -168,14 +168,7 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
     }
 
-    remove(){
-      this.game.remove(this);
-    }
 
-
-    collideWith(otherObj) {
-      otherObj.remove();
-    }
 }
 
 
@@ -251,7 +244,7 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dragon_ball__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dragon_ball */ "./lib/dragon_ball.js");
-/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bullet */ "./lib/bullet.js");
+/* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
 /* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util */ "./lib/util.js");
 
@@ -262,7 +255,7 @@ __webpack_require__.r(__webpack_exports__);
 class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
     options.radius = 60;
-    options.vel = [0, 0.7];
+    options.vel = [0.7, 0.7];
     super(options);
     this.ctx = options.ctx;
     this.pos = options.pos;
@@ -274,25 +267,63 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
     this.game = options.game;
+    this.goku = options.goku;
+    this.bindKeyHandlers();
+    this.sX = 0;
+
   }
+
+  bindKeyHandlers() {
+    key('l', () => {
+      this.fireBullet();
+    });
+  }
+
 
   move(){
-    this.pos[0] += this.vel[0];
-    this.pos[1] += this.vel[1];
+    if (this.goku.pos[0] > this.pos[0]) {
+      this.pos[0] += this.vel[0];
+    }
+    else if (this.goku.pos[0] < this.pos[0]) {
+      this.pos[0] -= this.vel[0];
+    }
+     if (this.goku.pos[1] > this.pos[1]) {
+      this.pos[1] += this.vel[1];
+    }
+    else if (this.goku.pos[1] < this.pos[1]) {
+      this.pos[1] -= this.vel[1];
+    }
+
+    this.pos = this.game.wrap(this.pos);
+    window.frames1 += 1;
   }
+
+  fireBullet() {
+    const bullet = new _enemy_bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,3], ctx: this.ctx, game: this.game } );
+    this.game.add(bullet);
+  }
+
+
+
+
+
+
 
   draw(ctx) {
+    switch(window.frames1) {
+      case 170:
+      this.fireBullet();
+      break;
+      default:
+      break;
+    }
+    if (window.frames1 > 170){
+      window.frames1 = 0;
+    }
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 650, 650);
+
   }
 
-  remove(){
-    this.game.remove(this);
-  }
-
-
-  collideWith(otherObj) {
-    otherObj.remove();
-  }
 
 
 
@@ -302,6 +333,58 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Enemy);
+
+
+/***/ }),
+
+/***/ "./lib/enemy_bullet.js":
+/*!*****************************!*\
+  !*** ./lib/enemy_bullet.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dragon_ball__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dragon_ball */ "./lib/dragon_ball.js");
+/* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./lib/util.js");
+
+
+
+
+
+class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
+    constructor(options){
+      options.radius = 60;
+      super(options);
+      this.pos = options.pos;
+      this.vel = options.vel;
+      this.ctx = options.ctx;
+      this.isWrappable = false;
+      this.game = options.game;
+      this.image = new Image();
+      this.image.src = 'assets/blast.jpg';
+      this.image.onload= () => {
+        this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
+      };
+    }
+
+    move(){
+      this.pos[0] += this.vel[0];
+      this.pos[1] += this.vel[1];
+    }
+
+    draw(ctx) {
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+    }
+
+
+}
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (EnemyBullet);
 
 
 /***/ }),
@@ -326,6 +409,7 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener("DOMContentLoaded", () => {
 
   window.frames = 0;
+  window.frames1 = 0;
   const canvasEl = document.getElementById('canvas');
   const ctx = canvasEl.getContext('2d');
 
@@ -366,6 +450,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./background */ "./lib/background.js");
 /* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./score */ "./lib/score.js");
 /* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./bullet */ "./lib/bullet.js");
+/* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
+/* harmony import */ var _hp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./hp */ "./lib/hp.js");
+
+
 
 
 
@@ -382,12 +470,14 @@ class Game {
     this.enemies = [];
     this.dragonBalls = [];
     this.bullets = [];
-    this.width = 600;
-    this.height = 800;
+    this.enemyBullets = [];
+    this.width = 900;
+    this.height = 600;
     this.NUM_DRAGON_BALLS = 4;
     this.NUM_ENEMIES = 2;
-    // this.NUM_BULLETS = 13;
     this.ctx = ctx;
+    this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,550], game: this, ctx: this.ctx} );
+    this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.initialSetup();
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
     this.audio = new Audio();
@@ -397,18 +487,18 @@ class Game {
 
   bindKeyHandlers(){
     key('p', () => {
-   if (this.audio.paused) {
-     this.audio.play();
-   } else {
-     this.audio.pause();
-   }
- });
+     if (this.audio.paused) {
+       this.audio.play();
+     } else {
+       this.audio.pause();
+     }
+   });
   }
 
   initialSetup() {
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
-    this.players.push(new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,550], game: this, ctx: this.ctx} ));
+    this.players.push(this.goku);
     this.addEnemies();
   }
 
@@ -420,7 +510,7 @@ class Game {
 
   addEnemies() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this }) );
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku }) );
     }
   }
 
@@ -434,8 +524,12 @@ class Game {
         if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"] && obj1.isCollidedWith(obj2)){
           obj1.collideWith(obj2);
           return;
-        } else if ((obj1 !== obj2 && obj1 instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"] && obj2 instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] || obj1 instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] && obj2 instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"]) && obj1.isCollidedWith(obj2)){
+        } else if (obj1 !== obj2 && obj1 instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"] && obj2 instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] && obj1.isCollidedWith(obj2)){
           obj1.collideWith(obj2);
+          obj2.collideWith(obj1);
+        } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] && obj1.isCollidedWith(obj2)){
+          obj1.collideWith(obj2);
+          obj2.collideWith(obj1);
         }
       }
     }
@@ -448,6 +542,8 @@ class Game {
       this.bullets.push(obj);
     } else if (obj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]){
       this.dragonBalls.push(obj);
+    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"]){
+      this.enemyBullets.push(obj);
     }
   }
 
@@ -459,6 +555,12 @@ class Game {
       this.enemies.splice(this.enemies.indexOf(obj), 1);
     } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"]) {
       this.bullets.splice(this.bullets.indexOf(obj), 1);
+    } else if (obj.lives === 0 && obj instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"]) {
+      obj.lives = 0;
+      this.players.splice(this.players.indexOf(obj), 1);
+      alert('Game Over');
+    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"]) {
+      this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
     }
   }
 
@@ -468,14 +570,14 @@ class Game {
  }
 
   allObjects() {
-    return [].concat(this.players, this.dragonBalls, this.bullets, this.enemies);
+    return [].concat(this.players, this.dragonBalls, this.bullets, this.enemies, this.enemyBullets);
   }
 
   draw() {
     this.ctx.clearRect(0,0, 800, 800);
     this.background.draw(this.ctx);
+    this.hp.draw(this.ctx);
     this.score.draw(this.ctx);
-    console.log(this.allObjects());
 
     this.allObjects().forEach( obj => {
       obj.draw(this.ctx);
@@ -483,11 +585,21 @@ class Game {
   }
 
   step() {
-    this.checkCollisions();
-    this.spawnDragonBalls();
-    this.allObjects().forEach( obj => {
-      obj.move();
+    if (this.score.score != 5) {
+      this.checkCollisions();
+      this.spawnDragonBalls();
+      this.spawnEnemies();
+      this.allObjects().forEach( obj => {
+        obj.move();
+      });
+    } else {
+        this.checkCollisions();
+        this.spawnDragonBalls();
+        this.spawnEnemiesLevelTwo();
+        this.allObjects().forEach( obj => {
+          obj.move();
     });
+  }
   }
 
 
@@ -495,6 +607,19 @@ class Game {
     if ( this.dragonBalls.length <= 0 ) {
       this.addDragonBalls();
     }
+  }
+
+  spawnEnemies() {
+    if (this.enemies.length <= 0) {
+      this.addEnemies();
+    }
+  }
+
+  spawnEnemiesLevelTwo() {
+    this.enemies.forEach( enemy => {
+        enemy.vel[0] += 1;
+        enemy.vel[1] += 1;
+    });
   }
 
   wrap(pos) {
@@ -535,7 +660,6 @@ class GameView {
    this.game.step(timeDelta);
    this.game.draw(this.ctx);
    this.lastTime = time;
-
    // every call to animate requests causes another call to animate
    requestAnimationFrame(this.animate.bind(this));
    }
@@ -561,13 +685,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bullet */ "./lib/bullet.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./lib/util.js");
 /* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
+/* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
 
 
 
 
 
 
-class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   constructor(options) {
     options.radius = 60;
     options.vel = [0,0];
@@ -583,6 +709,7 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
     };
     this.game = options.game;
     this.bindKeyHandlers();
+    this.lives = 3;
   }
 
   bindKeyHandlers() {
@@ -647,13 +774,26 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
   }
 
 
+  isCollidedWith(otherObj) {
+     const centerDist = _util__WEBPACK_IMPORTED_MODULE_2__["dist"](this.pos, otherObj.pos);
+     return centerDist < this.radius + otherObj.radius;
+   }
+
+
 
   fireBullet() {
-
     const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
     this.game.add(bullet);
   }
 
+
+
+  collideWith(otherObj) {
+    if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"]){
+      this.lives-= 1;
+    }
+    otherObj.remove();
+  }
 
 }
 
@@ -661,6 +801,43 @@ class Goku extends _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Goku);
+
+
+/***/ }),
+
+/***/ "./lib/hp.js":
+/*!*******************!*\
+  !*** ./lib/hp.js ***!
+  \*******************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Hp {
+  constructor(player){
+    this.player = player;
+  }
+
+  draw(ctx) {
+
+    // if (this.player.lives === 1) {
+      ctx.fillText("HP: "+this.player.lives , 750, 40);
+    //   ctx.fillRect(770,20,150,100);
+    // } else {
+    //   ctx.fillText("HP: "+this.player.lives , 750, 40);
+    //   ctx.fillRect(770,20,100,100);
+    // }
+
+    // ctx.strokeStyle="red";
+    // ctx.font = "36px Saiyan Sans";
+    // ctx.fillStyle = "yellow";
+    // ctx.stroke();
+
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Hp);
 
 
 /***/ }),
@@ -701,7 +878,7 @@ class MovingObject {
 
   move(){
     this.pos[0] += this.vel[0];
-    this.pos[1] += this.vel[1];
+    this.pos[1] += Math.abs(this.vel[1]);
     if (this.game.isOutOfBounds(this.pos)) {
        if (this.isWrappable) {
          this.pos = this.game.wrap(this.pos);
@@ -709,6 +886,7 @@ class MovingObject {
          this.remove();
        }
      }
+
   }
 
   isCollidedWith(otherObj) {
@@ -719,6 +897,13 @@ class MovingObject {
    collideWith(otherObj) {
      otherObj.remove();
    }
+
+   remove(){
+
+     this.game.remove(this);
+   }
+
+
 
 }
 
@@ -802,9 +987,15 @@ const scale = (vec, m) => {
 const randomPosition = (maxX, maxY) => {
   //
   const x = maxX * Math.random();
-  const y = maxY * Math.random();
+  const y = maxY * 0.5 * Math.random();
   return [x, y];
 };
+
+// export const randomPosition = (maxX, maxY) => {
+//   const x = (maxX * 2 * Math.random()) - maxX;
+//   const y = (maxY * Math.random()) - maxY * 0.5;
+//   return [x, y];
+// };
 
 const wrap = (coord, max) => {
   if (coord < 0){
