@@ -1,4 +1,8 @@
-
+.gif {
+  position: absolute;
+  width: 900px;
+  height: 600px;
+}
 
 .header {
   font-family: Saiyan Sans;

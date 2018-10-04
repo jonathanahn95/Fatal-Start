@@ -247,6 +247,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
 /* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util */ "./lib/util.js");
+/* harmony import */ var _sensu_bean__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sensu_bean */ "./lib/sensu_bean.js");
+
 
 
 
@@ -270,7 +272,6 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.goku = options.goku;
     this.bindKeyHandlers();
     this.sX = 0;
-    debugger
   }
 
   bindKeyHandlers() {
@@ -303,12 +304,6 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.game.add(bullet);
   }
 
-
-
-
-
-
-
   draw(ctx) {
     switch(window.frames1) {
       case 170:
@@ -321,7 +316,16 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
       window.frames1 = 0;
     }
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 650, 650);
+  }
 
+  remove(){
+    debugger
+    this.game.remove(this);
+    this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
+
+    this.game.add(this.sensuBean);
+
+    // this.sensuBean.draw(this.ctx);
   }
 
 
@@ -452,7 +456,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./bullet */ "./lib/bullet.js");
 /* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
 /* harmony import */ var _hp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./hp */ "./lib/hp.js");
-/* harmony import */ var _instructions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./instructions */ "./lib/instructions.js");
+/* harmony import */ var _sensu_bean__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sensu_bean */ "./lib/sensu_bean.js");
+/* harmony import */ var _instructions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./instructions */ "./lib/instructions.js");
+
 
 
 
@@ -469,12 +475,13 @@ class Game {
   constructor(ctx){
     this.ctx = ctx;
     this.background = new _background__WEBPACK_IMPORTED_MODULE_5__["default"](ctx);
-    this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_10__["default"](ctx);
+    this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_11__["default"](ctx);
     this.players = [];
     this.enemies = [];
     this.dragonBalls = [];
     this.bullets = [];
     this.enemyBullets = [];
+    this.sensuBeans = [];
     this.width = 900;
     this.height = 600;
     this.NUM_DRAGON_BALLS = 4;
@@ -519,13 +526,11 @@ class Game {
   }
 
   addEnemiesLevelTwo() {
-    debugger
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
       this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.1,0.1] }) );
     }
   }
   addEnemiesLevelThree() {
-    debugger
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
       this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [2.1,2.1] }) );
     }
@@ -549,6 +554,8 @@ class Game {
         } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] && obj1.isCollidedWith(obj2)){
           obj1.collideWith(obj2);
           obj2.collideWith(obj1);
+        } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"] && obj1.isCollidedWith(obj2)){
+          obj1.collideWith(obj2);
         }
       }
     }
@@ -563,6 +570,8 @@ class Game {
       this.dragonBalls.push(obj);
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"]){
       this.enemyBullets.push(obj);
+    } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]){
+      this.sensuBeans.push(obj);
     }
   }
 
@@ -580,6 +589,8 @@ class Game {
       alert('Game Over');
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"]) {
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
+    } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
+      this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
     }
   }
 
@@ -589,11 +600,10 @@ class Game {
  }
 
   allObjects() {
-    return [].concat(this.players, this.dragonBalls, this.bullets, this.enemies, this.enemyBullets);
+    return [].concat(this.players, this.dragonBalls, this.bullets, this.enemies, this.enemyBullets, this.sensuBeans);
   }
 
   draw() {
-    // this.ctx.clearRect(0,0, 800, 800);
     this.instructions.draw(this.ctx);
     this.background.draw(this.ctx);
     this.hp.draw(this.ctx);
@@ -719,6 +729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./lib/util.js");
 /* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
 /* harmony import */ var _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./enemy_bullet */ "./lib/enemy_bullet.js");
+/* harmony import */ var _sensu_bean__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sensu_bean */ "./lib/sensu_bean.js");
+
 
 
 
@@ -824,6 +836,8 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   collideWith(otherObj) {
     if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"]){
       this.lives-= 1;
+    } else if (otherObj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_5__["default"] && this.lives <= 2){
+      this.lives++;
     }
     otherObj.remove();
   }
@@ -1002,6 +1016,40 @@ class Score {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Score);
+
+
+/***/ }),
+
+/***/ "./lib/sensu_bean.js":
+/*!***************************!*\
+  !*** ./lib/sensu_bean.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _moving_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./moving_object */ "./lib/moving_object.js");
+
+class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor(options){
+    super(options);
+    this.pos = options.pos;
+    this.vel = options.vel;
+    this.isWrappable = false;
+    this.image = new Image();
+    this.image.src = 'assets/sensu.jpg';
+    this.image.onload= () => {
+      this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
+    };  }
+
+  draw(ctx) {
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (SensuBean);
 
 
 /***/ }),
