@@ -724,7 +724,7 @@ class Game {
      }
    });
 
-   key('n', () => {
+   key('p', () => {
      this.intro = false;
    }) ;
 
@@ -855,7 +855,7 @@ class Game {
   draw() {
     if (this.intro) {
       this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 20){
+    }  else if (this.score.score === 1){
       this.dragonPage.draw(this.ctx);
     } else {
       this.background.draw(this.ctx);
@@ -1198,6 +1198,8 @@ class Instructions {
     this.goku = options.goku;
     this.image = new Image();
     this.image.src = 'assets/aura_goku.png';
+    this.text = new Image();
+    this.text.src = 'assets/intro_text.png';
     // this.image = new Image();
     // this.image.src = 'assets/super_goku.png';
     // this.image.onload= () => {
@@ -1219,7 +1221,8 @@ class Instructions {
       // ctx.fillText('Welcome To Fatal Start', 300,60);
       // ctx.strokeText('asasdsad', 300, 100);
       this.ctx.fillRect(0,0,900,600);
-      this.ctx.drawImage(this.image, 300, 10);
+      this.ctx.drawImage(this.text, -15, 10)
+      this.ctx.drawImage(this.image, 310, 10);
       debugger
   }
 
