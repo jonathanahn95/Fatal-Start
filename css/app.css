@@ -9,7 +9,7 @@
   display: flex;
   font-size: 58px;
   justify-content: center;
-  background-color: rgb(181, 159, 127);
+  /* background-color: rgb(181, 159, 127); */
 }
 
 
@@ -52,15 +52,20 @@
 
 html {
   background-color: rgb(181, 159, 127);
-  /* background-image: url('../assets/kame.jpg'); */
-  /* background-size: cover; */
+  /* background-color: rgb(238, 240, 235); */
+
+  /* background-image: url('../assets/jake.jpg'); */
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  height: 100%
   display: flex;
   align-items: center;
   justify-content: center;
 }
 #canvas {
   border-radius: 5px;
-
+  background-image: url('../assets/intro.gif');
+  background-size: cover;
 }
 .main {
   display: flex;
