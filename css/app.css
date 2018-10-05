@@ -5,7 +5,7 @@
 }
 
 .header {
-  font-family: Saiyan Sans;
+  font-family: Impact;
   display: flex;
   font-size: 58px;
   justify-content: center;
@@ -30,9 +30,10 @@
 
 .head-ul {
   display: flex;
-  font-family: Saiyan Sans;
+  font-family: Impact;
+
   font-size: 34px;
-  color: black;
+  color: dark-gray;
   letter-spacing: 1px;
 
   /* flex-direction: column; */
@@ -44,7 +45,7 @@
 
 .header-start {
   color: red;
-  padding-top: 15px;
+  padding-top: 11px;
   letter-spacing: 1px;
 
 }
@@ -74,21 +75,60 @@ html {
 }
 
 .links {
-  /* padding-right: 200px; */
+  padding-top: 20px;
   list-style: none;
-  font-family: Saiyan Sans;
-  min-height: 550px;
+  font-family: Impact;
+  /* min-height: 550px; */
   letter-spacing: 1.5px;
-
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: space-around;
   align-items: center;
-  margin-left: 40px;
+  margin: auto;
+
+}
+.main-instructions-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
 
 }
 
-.links li {
+.h2 {
+  font-size: 30px;
+  margin: auto;
+  color: black;
+  padding-bottom: 20px;
+  font-family: Impact;
+
+}
+.instructions-container {
+  font-family: Impact;
+  color: #434343;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: yellow;
+  border-radius: 5px;
+  width: 80%;
+  margin: auto;
+  padding: 20px 0;
+
+}
+
+.instructions {
+  font-size: 34px
+}
+
+.play-instruction-ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 20px;
+}
+
+/* .links a {
   color: red;
   background: yellow;
   min-height: 150px;
@@ -98,7 +138,7 @@ html {
   border-radius: 100%;
   align-items: center;
   font-size: 30px;
-}
+} */
 
 .git {
   color: red;
@@ -118,27 +158,8 @@ html {
   padding: 0 15px;
 
 }
-.instructions {
-  color: black;
-  font-family: Saiyan Sans;
-  background: yellow;
-  height: 100%;
-  border: 1px solid black;
-  border-radius: 13px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 40px;
 
-}
-.h3 {
-  padding-top: 15px;
-  font-family: Saiyan Sans;
-  color: red;
-  font-size: 48px;
-  letter-spacing: 1.5px;
 
-}
 
 .list {
   font-size: 30px;

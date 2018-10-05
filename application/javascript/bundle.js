@@ -254,16 +254,18 @@ class DragonPage {
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     };
+    debugger
   }
 
   draw(ctx) {
+      debugger
       ctx.clearRect(0,0, 900, 600);
       this.ctx.drawImage(this.image, 350, 350,100, 100);
       ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
       ctx.fillText("PRESS Y" , 80, 140);
       ctx.font = "36px arial";
       ctx.fillStyle = "yellow";
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 950, 1150);
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.goku.pos[0] - 125 , this.goku.pos[1] - 90 , 950, 1150);
 
   }
 
@@ -358,11 +360,11 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 650, 650);
+    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 125 , this.pos[1] - 90 , 500, 500);
   }
 
   remove(){
-    debugger
+
     this.game.remove(this);
     this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
 
@@ -617,7 +619,7 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
-      debugger
+       
     }
 
     move(){
@@ -703,7 +705,7 @@ class Game {
     this.NUM_DRAGON_BALLS = 4;
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
     this.NUM_ENEMIES = 2;
-    this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,550], game: this, ctx: this.ctx , score: this.score} );
+    this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [550,500], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_11__["default"]({ ctx: this.ctx, goku: this.goku });
     this.dragonPage = new _dragon_page__WEBPACK_IMPORTED_MODULE_18__["default"]({ ctx: this.ctx, goku: this.goku });
@@ -712,7 +714,7 @@ class Game {
     this.audio.src = './assets/rock_the_dragon.mp3';
     this.bindKeyHandlers();
     this.intro = true;
-    this.dragon = true;
+    this.dragon = false;
   }
 
   bindKeyHandlers(){
@@ -737,7 +739,7 @@ class Game {
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
     this.players.push(this.goku);
-    this.addEnemies();
+    this.addEnemiesLevelTwo();
   }
 
   addDragonBalls() {
@@ -853,9 +855,12 @@ class Game {
   }
 
   draw() {
+    if (this.score.score === 1){
+      this.dragon = true;
+    }
     if (this.intro) {
       this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 1){
+    }  else if (this.score.score === 23){
       this.dragonPage.draw(this.ctx);
     } else {
       this.background.draw(this.ctx);
@@ -1095,7 +1100,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     //   window.frames = 0;
     // }
 
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 850, 850);
+    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 125 , this.pos[1] - 90 , 700, 700);
   }
 
 
@@ -1113,7 +1118,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
 
   fireSpirtBomb() {
     const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
-    debugger
+
     if (this.score.score !== 0 && this.score.score % 7 === 0){
       this.game.add(spirtBomb);
     }
@@ -1205,7 +1210,7 @@ class Instructions {
     // this.image.onload= () => {
     //   this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     // };
-    debugger
+     
   }
 
   draw(ctx) {
@@ -1223,7 +1228,7 @@ class Instructions {
       this.ctx.fillRect(0,0,900,600);
       this.ctx.drawImage(this.text, -15, 10)
       this.ctx.drawImage(this.image, 310, 10);
-      debugger
+       
   }
 
 
@@ -1373,7 +1378,7 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
-      debugger
+
     }
 
     move(){
@@ -1382,7 +1387,7 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
     }
 
     draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 850, 950);
     }
 
 
@@ -1476,7 +1481,7 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 950, 1150);
+    this.ctx.drawImage(this.image, this.sX, 0, 1000, 1000, this.pos[0] - 125 , this.pos[1] - 90 , 650, 850);
   }
 
   remove(){
@@ -1589,8 +1594,8 @@ class Score {
 
   draw(ctx) {
 
-    ctx.fillText("dragonballs: "+this.score , 15, 40);
-    ctx.font = "36px arial";
+    ctx.fillText("Dragon-Balls: "+this.score , 15, 40);
+    ctx.font = "36px Impact";
     ctx.fillStyle = "yellow";
   }
 }
