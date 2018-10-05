@@ -165,7 +165,7 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     }
 
     draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 30 , 250, 250);
     }
 
 
@@ -200,6 +200,7 @@ const DEFAULTS = {
 
 class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]  {
   constructor(options){
+
     super(options);
     this.isWrappable = false;
     this.image = new Image();
@@ -301,7 +302,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 60;
+    options.radius = 20;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -360,7 +361,7 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 125 , this.pos[1] - 90 , 500, 500);
+    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 55 , this.pos[1] - 60 , 500, 500);
   }
 
   remove(){
@@ -405,7 +406,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 60;
+      options.radius = 20;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -425,7 +426,7 @@ class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]
     }
 
     draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 10 , 250, 250);
     }
 
 
@@ -449,10 +450,8 @@ class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./lib/game.js");
 /* harmony import */ var _game_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game_view */ "./lib/game_view.js");
-// import MovingObject from './moving_object';
 
 
-// import Character from './character';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -463,21 +462,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvasEl.getContext('2d');
 
 
-  // const game = new Game(ctx);
-  // const char = new Character();
-  // char.drawChar(ctx);
 
   const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
   new _game_view__WEBPACK_IMPORTED_MODULE_1__["default"](game, ctx).start();
 
 });
-
-
-
-
-//   const mo = new MovingObject(  { pos: [280, 280], vel: [10, 10], radius: 5, color: "#00FF00"}
-// );
-//   mo.draw(ctx);
 
 
 /***/ }),
@@ -504,7 +493,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Freiza extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 60;
+    options.radius = 5;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -563,7 +552,7 @@ class Freiza extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 950, 1150);
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 45 , this.pos[1] - 130 , 950, 1150);
   }
 
   remove(){
@@ -607,7 +596,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 60;
+      options.radius = 20;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -619,7 +608,7 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
-       
+
     }
 
     move(){
@@ -629,6 +618,7 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+
     }
 
 
@@ -705,7 +695,7 @@ class Game {
     this.NUM_DRAGON_BALLS = 4;
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
     this.NUM_ENEMIES = 2;
-    this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [550,500], game: this, ctx: this.ctx , score: this.score} );
+    this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,450], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_11__["default"]({ ctx: this.ctx, goku: this.goku });
     this.dragonPage = new _dragon_page__WEBPACK_IMPORTED_MODULE_18__["default"]({ ctx: this.ctx, goku: this.goku });
@@ -731,7 +721,7 @@ class Game {
    }) ;
 
    key('y', () => {
-     this.dragon = false;
+     this.score.score += 1;
    }) ;
   }
 
@@ -739,7 +729,7 @@ class Game {
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
     this.players.push(this.goku);
-    this.addEnemiesLevelTwo();
+    // this.addEnemies();
   }
 
   addDragonBalls() {
@@ -762,13 +752,14 @@ class Game {
 
   addEnemiesLevelThree() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [2.1,2.1] }) );
+      this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.3,1.3] }) );
+
     }
   }
 
   addEnemiesLevelFour() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [4.1,4.1] }) );
+      this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.5,1.5] }) );
     }
   }
 
@@ -855,12 +846,10 @@ class Game {
   }
 
   draw() {
-    if (this.score.score === 1){
-      this.dragon = true;
-    }
+
     if (this.intro) {
       this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 23){
+    }  else if (this.score.score === 20){
       this.dragonPage.draw(this.ctx);
     } else {
       this.background.draw(this.ctx);
@@ -1019,7 +1008,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   constructor(options) {
-    options.radius = 60;
+    options.radius = 20;
     options.vel = [0,0];
     super(options);
     this.ctx = options.ctx;
@@ -1100,7 +1089,8 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     //   window.frames = 0;
     // }
 
-    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 125 , this.pos[1] - 90 , 700, 700);
+    this.ctx.drawImage(this.image, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -40 , 700, 700);
+
   }
 
 
@@ -1210,7 +1200,7 @@ class Instructions {
     // this.image.onload= () => {
     //   this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     // };
-     
+
   }
 
   draw(ctx) {
@@ -1226,9 +1216,9 @@ class Instructions {
       // ctx.fillText('Welcome To Fatal Start', 300,60);
       // ctx.strokeText('asasdsad', 300, 100);
       this.ctx.fillRect(0,0,900,600);
-      this.ctx.drawImage(this.text, -15, 10)
+      this.ctx.drawImage(this.text, -15, 10);
       this.ctx.drawImage(this.image, 310, 10);
-       
+
   }
 
 
@@ -1263,7 +1253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 60;
+    options.radius = 20;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -1322,7 +1312,9 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 125 , this.pos[1] - 90 , 650, 650);
+    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] -55  , this.pos[1] - 60 , 450, 450);
+    this.ctx.arc(450,450,35,0,2*Math.PI);
+    this.ctx.stroke();
   }
 
   remove(){
@@ -1366,7 +1358,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 60;
+      options.radius = 40;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -1388,6 +1380,7 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 850, 950);
+
     }
 
 
@@ -1422,7 +1415,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 60;
+    options.radius = 5;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -1430,7 +1423,7 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/buu.jpg';
+    this.image.src = 'assets/buu.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -1481,7 +1474,7 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 1000, 1000, this.pos[0] - 125 , this.pos[1] - 90 , 650, 850);
+    this.ctx.drawImage(this.image, this.sX, 0, 1000, 1000, this.pos[0] -30 , this.pos[1] - 70 , 650, 850);
   }
 
   remove(){
@@ -1658,7 +1651,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class SpirtBomb extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 60;
+      options.radius = 20;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -1678,7 +1671,9 @@ class SpirtBomb extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     }
 
     draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 400, 400, this.pos[0] - 50 , this.pos[1] - 30 , 550, 250);
+      this.ctx.drawImage(this.image, this.sX, 0, 400, 400, this.pos[0] - 50 , this.pos[1] + 120 , 550, 250);
+      this.ctx.arc(410,270,5,-130,2*Math.PI);
+      this.ctx.stroke();
     }
 
 
