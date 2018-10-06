@@ -213,6 +213,7 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
     super(options);
     this.isWrappable = false;
     this.image = new Image();
+    this.score = options.score;
     this.image.src = 'assets/pix-drag.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
@@ -223,9 +224,8 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 120, 120);
   }
 
-
-
   collideWith(otherObj) {
+    this.score.score++;
     otherObj.remove();
   }
 
@@ -374,13 +374,13 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   }
 
   remove(){
-
+    debugger
     this.game.remove(this);
-    this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
+    // 
+    // this.sensuBean = new SensuBean( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
+    //
+    // this.game.add(this.sensuBean);
 
-    this.game.add(this.sensuBean);
-
-    // this.sensuBean.draw(this.ctx);
   }
 
 
@@ -605,9 +605,6 @@ class Freiza extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   remove(){
     this.game.remove(this);
-    this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
-
-    this.game.add(this.sensuBean);
 
     // this.sensuBean.draw(this.ctx);
   }
@@ -751,7 +748,6 @@ class Game {
     this.height = 600;
     this.NUM_DRAGON_BALLS = 4;
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
-    this.NUM_ENEMIES = 2;
     this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,450], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_11__["default"]({ ctx: this.ctx, goku: this.goku });
@@ -759,6 +755,7 @@ class Game {
     this.initialSetup();
     this.audio = new Audio();
     this.audio.src = './assets/rock_the_dragon.mp3';
+    this.audio.play();
     this.bindKeyHandlers();
     this.intro = true;
     this.dragon = false;
@@ -774,13 +771,6 @@ class Game {
      }
    });
 
-   key('p', () => {
-     this.introScore ++;
-   }) ;
-
-   key('y', () => {
-     this.score.score += 1;
-   }) ;
   }
 
   initialSetup() {
@@ -790,12 +780,6 @@ class Game {
     this.addEnemies();
   }
 
-  setUp() {
-    if (this.introScore === 0){
-      this.instructions.draw(this.ctx);
-    }
-  }
-
   addDragonBalls() {
     for (var i = 0; i < this.NUM_DRAGON_BALLS; i++) {
       this.add(new _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, this.height), game: this, ctx: this.ctx , score: this.score}) );
@@ -803,33 +787,38 @@ class Game {
   }
 
   addEnemies() {
-    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+    for (var i = 0; i < 2; i++) {
       this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
     }
   }
 
   addEnemiesLevelTwo() {
-    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+    for (var i = 0; i < 4; i++) {
       this.add(new _krillin__WEBPACK_IMPORTED_MODULE_13__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.1,1.1] }) );
     }
   }
 
   addEnemiesLevelThree() {
-    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+    for (var i = 0; i < 3; i++) {
       this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.3,1.3] }) );
-
     }
   }
 
   addEnemiesLevelFour() {
-    for (var i = 0; i < this.NUM_ENEMIES; i++) {
+    for (var i = 0; i < 4; i++) {
       this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.5,1.5] }) );
     }
   }
 
-
-
-
+  addSensuBean() {
+    if (this.score.score != 0 && this.sensuBeans.length >= 0 && this.sensuBeans.length < 1 && this.score.score % 5 === 0){
+      debugger
+      const sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, this.height), vel: [0,-5], ctx: this.ctx, game: this} );
+      setInterval(function(){
+        sensuBean.game.add(sensuBean);
+      }, 5000);
+    }
+  }
 
   checkCollisions() {
     const allObj = this.allObjects();
@@ -877,8 +866,10 @@ class Game {
       this.dragonBalls.push(obj);
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]){
       this.enemyBullets.push(obj);
-    } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]){
+    } else if (this.sensuBeans.length === 0 && obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]){
+      debugger
       this.sensuBeans.push(obj);
+      debugger
     }
   }
 
@@ -887,7 +878,6 @@ class Game {
       this.dragonBalls.splice(this.dragonBalls.indexOf(obj), 1);
     } else if (obj instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] || obj instanceof _krillin__WEBPACK_IMPORTED_MODULE_13__["default"] || obj instanceof _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"] || obj instanceof _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]) {
       this.enemies.splice(this.enemies.indexOf(obj), 1);
-      debugger
     } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"] || obj instanceof _spirt_bomb__WEBPACK_IMPORTED_MODULE_12__["default"]) {
       this.bullets.splice(this.bullets.indexOf(obj), 1);
     } else if (obj.lives === 0 && obj instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"]) {
@@ -926,12 +916,14 @@ class Game {
       this.checkCollisions();
       this.spawnDragonBalls();
       this.spawnEnemies();
+      this.addSensuBean();
       this.allObjects().forEach( obj => {
         obj.move();
       });
     } else if (this.score.score <= 10) {
         this.checkCollisions();
         this.spawnDragonBalls();
+        this.addSensuBean();
         this.spawnEnemiesLevelTwo();
         this.allObjects().forEach( obj => {
           obj.move();
@@ -939,6 +931,7 @@ class Game {
     } else if (this.score.score <= 15) {
       this.checkCollisions();
       this.spawnDragonBalls();
+      this.addSensuBean();
       this.spawnEnemiesLevelThree();
       this.allObjects().forEach( obj => {
         obj.move();
@@ -946,6 +939,7 @@ class Game {
     } else {
       this.checkCollisions();
       this.spawnDragonBalls();
+      this.addSensuBean();
       this.spawnEnemiesLevelFour();
       this.allObjects().forEach( obj => {
         obj.move();
@@ -1158,9 +1152,6 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
       this.fireBullet();
     });
 
-    key('space', () => {
-      this.fireSpirtBomb();
-    });
   }
 
   move(){
@@ -1193,28 +1184,27 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
       this.ctx.drawImage(this.superGoku, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -40 , 700, 700);
     } else {
       this.ctx.drawImage(this.image, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -70 , 700, 700);
-
     }
 
   }
-
 
   isCollidedWith(otherObj) {
      const centerDist = _util__WEBPACK_IMPORTED_MODULE_2__["dist"](this.pos, otherObj.pos);
      return centerDist < this.radius + otherObj.radius;
    }
 
-
-
   fireBullet() {
-    if (this.score.score >= 12){
-      const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
-      this.game.add(spirtBomb);
-    } else {
-      const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
-      this.game.add(bullet);
+    if (this.score.score != 0){
+      if (this.score.score >= 12){
+        const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+        this.game.add(spirtBomb);
+      } else {
+        const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+        this.game.add(bullet);
+      }
+      this.score.score -= 1;
     }
-  
+
 
   }
 
@@ -1430,9 +1420,9 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   remove(){
     this.game.remove(this);
-    this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
-
-    this.game.add(this.sensuBean);
+    // this.sensuBean = new SensuBean( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
+    //
+    // this.game.add(this.sensuBean);
 
     // this.sensuBean.draw(this.ctx);
   }
@@ -1599,10 +1589,7 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   remove(){
     this.game.remove(this);
-    this.sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
-
-    this.game.add(this.sensuBean);
-
+  
     // this.sensuBean.draw(this.ctx);
   }
 
@@ -1702,13 +1689,16 @@ __webpack_require__.r(__webpack_exports__);
 class Score {
   constructor(score){
     this.score = score;
+    this.points = 0;
   }
 
   draw(ctx) {
 
-    ctx.fillText("Dragon-Balls: "+this.score , 15, 40);
+    ctx.fillText("Dragon-Balls: "+this.score , 325, 40);
     ctx.font = "36px Impact";
     ctx.fillStyle = "yellow";
+    ctx.fillText("Score: "+this.points ,15, 40);
+    this.points++;
   }
 }
 
@@ -1735,13 +1725,28 @@ class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.vel = options.vel;
     this.isWrappable = false;
     this.image = new Image();
+    this.game = options.game;
     this.image.src = 'assets/sensju.jpg';
-    this.image.onload= () => {
-      this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
-    };  }
+
+    debugger
+  }
 
   draw(ctx) {
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
+  }
+
+
+  move(){
+    this.pos[0] += this.vel[0];
+    this.pos[1] += Math.abs(this.vel[1]);
+    debugger
+    if (this.game.isOutOfBounds(this.pos)) {
+       if (this.isWrappable) {
+         this.pos = this.game.wrap(this.pos);
+       } else {
+         this.remove();
+       }
+     }
 
   }
 }
