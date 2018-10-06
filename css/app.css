@@ -1,3 +1,49 @@
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /* background-color: rgb(0,0,0); /* Fallback color */ */
+    /* background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ */
+    /* background-color: rgba(0,0,0,0.8); */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  /* background-color: rgb(181, 159, 127); */
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    /* border: 1px solid #888; */
+    width: 50%;
+    /* height: 80%; */
+    /* background-color: rgba(0,0,0,0.8); */
+
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+
 .gif {
   position: absolute;
   width: 900px;
@@ -52,7 +98,9 @@
 
 
 html {
-  background-color: rgb(181, 159, 127);
+  /* background-color: rgb(181, 159, 127); */
+  background-color: rgba(0,0,0,0.8);
+
   /* background-color: #F0F8FF		; */
 
   /* background-image: url('../assets/jake.jpg'); */
@@ -65,8 +113,9 @@ html {
 }
 #canvas {
   border-radius: 5px;
-  background-image: url('../assets/intro.gif');
+  background-image: url('../assets/Final.png');
   background-size: cover;
+
 }
 .main {
   display: flex;
@@ -109,8 +158,10 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: yellow;
   border-radius: 5px;
+  /* background-color: orange; */
+  background-color: rgb(181, 159, 127);
+  background-color: #DEB887	;
   width: 80%;
   margin: auto;
   padding: 20px 0;
@@ -128,18 +179,6 @@ html {
   font-size: 20px;
 }
 
-/* .links a {
-  color: red;
-  background: yellow;
-  min-height: 150px;
-  min-width: 150px;
-  display: flex;
-  justify-content: center;
-  border-radius: 100%;
-  align-items: center;
-  font-size: 30px;
-} */
-
 .git {
   color: red;
       background: yellow;
@@ -150,10 +189,33 @@ html {
       justify-content: center;
       border-radius: 100%;
       align-items: center;
-      font-size: 20px;
+      font-size: 19px;
+}
+
+.git-1 {
+  color: red;
+      background: yellow;
+      min-height: 90px;
+      min-width: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 100%;
+      align-items: center;
+      font-size: 17px;
 }
 
 
+.moves-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.moves-list li {
+  padding: 6px 0;
+}
 .ul {
   padding: 0 15px;
 

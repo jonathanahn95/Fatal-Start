@@ -424,12 +424,9 @@ class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]
       this.pos[0] += this.vel[0];
       this.pos[1] += Math.abs(this.vel[1]);
       if (this.game.isOutOfBounds(this.pos)) {
-         debugger
          if (this.isWrappable) {
-           debugger
            this.pos = this.game.wrap(this.pos);
          } else {
-           debugger
            this.remove();
          }
        }
@@ -468,15 +465,45 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  window.frames = 0;
-  window.frames1 = 0;
-  const canvasEl = document.getElementById('canvas');
-  const ctx = canvasEl.getContext('2d');
+
+  window.intro = false;
+
+  const startGame = () => {
+    window.frames = 0;
+    window.frames1 = 0;
+    const canvasEl = document.getElementById('canvas');
+    const ctx = canvasEl.getContext('2d');
+
+    const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
+    new _game_view__WEBPACK_IMPORTED_MODULE_1__["default"](game, ctx).start();
+  };
+
+  var modal = document.getElementById('myModal');
+  
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user open browser, open the modal
+  window.onload = function() {
+    modal.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+
+  span.onclick = function(event) {
+      modal.style.display = 'none';
+      window.intro = true;
+    if ( window.intro === true) {
+        startGame();
+      }
+  };
 
 
 
-  const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
-  new _game_view__WEBPACK_IMPORTED_MODULE_1__["default"](game, ctx).start();
+
 
 });
 
@@ -857,9 +884,8 @@ class Game {
       obj.lives = 0;
       this.players.splice(this.players.indexOf(obj), 1);
       alert('Game Over');
-    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]) {
+    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"] || obj instanceof _spirt_bomb__WEBPACK_IMPORTED_MODULE_12__["default"]) {
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
-      debugger
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
       this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
     }
@@ -876,9 +902,12 @@ class Game {
 
   draw() {
 
-    if (this.introScore === 0) {
-    this.setUp();
-    }  else if (this.score.score === 20){
+    // if (this.introScore === 0) {
+    // this.setUp();
+    // }  else
+
+
+    if (this.score.score === 20){
       this.dragonPage.draw(this.ctx);
     } else {
       this.background.draw(this.ctx);
@@ -1001,6 +1030,49 @@ class GameView {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (GameView);
+
+//setTimeout example
+// import Instructions from './Instructions';
+//
+//
+// class GameView {
+//   constructor(game, ctx){
+//     this.game = game;
+//     this.ctx = ctx;
+//     this.instructions = new Instructions(this.ctx);
+//   }
+//
+//   start() {
+//     this.startInstructions(this.ctx);
+//
+//     setTimeout(() => {
+//       this.lastTime = 0;
+//       requestAnimationFrame(this.animate.bind(this));
+//     }, 3000);
+//   }
+//
+//   startInstructions(){
+//     this.instructions.draw(this.ctx);
+//   }
+//
+//
+//   // setTimeout() {
+//   //  setTimeout(() => {
+//   //  const timeDelta = time - this.lastTime;
+//   //  this.game.step(timeDelta);
+//   //  this.game.draw(this.ctx);
+//   //  this.lastTime = time;
+//   //  // every call to animate requests causes another call to animate
+//   //  requestAnimationFrame(this.animate.bind(this));
+//   //  }, 20000);
+//   // }
+//
+//
+// }
+//
+//
+//
+// export default GameView;
 
 
 /***/ }),
@@ -1593,7 +1665,6 @@ class MovingObject {
    }
 
    remove(){
-     debugger
      this.game.remove(this);
    }
 
