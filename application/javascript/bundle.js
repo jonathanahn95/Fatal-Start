@@ -718,7 +718,7 @@ class Game {
    });
 
    key('p', () => {
-     this.introScore+= 1;
+     this.intro = false;
    }) ;
 
    key('y', () => {
@@ -848,14 +848,13 @@ class Game {
 
   draw() {
 
-    if (this.introScore === 0) {
-      debugger
+    while (this.intro) {
       this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 1){
-      debugger
+    }
+
+      if (this.score.score === 1){
       this.dragonPage.draw(this.ctx);
-    } else if (this.introScore !== 0) {
-      debugger
+    } else  {
       this.background.draw(this.ctx);
       this.hp.draw(this.ctx);
       this.score.draw(this.ctx);
