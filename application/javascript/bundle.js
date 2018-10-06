@@ -813,6 +813,7 @@ class Game {
     } else if (obj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]){
       this.dragonBalls.push(obj);
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]){
+      debugger
       this.enemyBullets.push(obj);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]){
       this.sensuBeans.push(obj);
@@ -831,6 +832,7 @@ class Game {
       this.players.splice(this.players.indexOf(obj), 1);
       alert('Game Over');
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]) {
+      debugger
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
       this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
@@ -848,13 +850,14 @@ class Game {
 
   draw() {
 
-    while (this.intro) {
-      this.instructions.draw(this.ctx);
-    }
+    if (this.intro) {
 
-      if (this.score.score === 1){
+      this.instructions.draw(this.ctx);
+    }  else if (this.score.score === 1){
+
       this.dragonPage.draw(this.ctx);
-    } else  {
+    } else if (this.introScore !== 0) {
+
       this.background.draw(this.ctx);
       this.hp.draw(this.ctx);
       this.score.draw(this.ctx);
@@ -1204,7 +1207,7 @@ class Instructions {
     //   this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     // };
 
-    debugger
+
   }
 
   draw(ctx) {
