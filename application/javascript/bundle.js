@@ -422,8 +422,20 @@ class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]
 
     move(){
       this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
+      this.pos[1] += Math.abs(this.vel[1]);
+      if (this.game.isOutOfBounds(this.pos)) {
+         debugger
+         if (this.isWrappable) {
+           debugger
+           this.pos = this.game.wrap(this.pos);
+         } else {
+           debugger
+           this.remove();
+         }
+       }
+
     }
+
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 10 , 250, 250);
@@ -613,8 +625,17 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
 
     move(){
       this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
+      this.pos[1] += Math.abs(this.vel[1]);
+      if (this.game.isOutOfBounds(this.pos)) {
+         if (this.isWrappable) {
+           this.pos = this.game.wrap(this.pos);
+         } else {
+           this.remove();
+         }
+       }
+
     }
+
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
@@ -838,6 +859,7 @@ class Game {
       alert('Game Over');
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]) {
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
+      debugger
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
       this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
     }
@@ -1381,8 +1403,17 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
 
     move(){
       this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
+      this.pos[1] += Math.abs(this.vel[1]);
+      if (this.game.isOutOfBounds(this.pos)) {
+         if (this.isWrappable) {
+           this.pos = this.game.wrap(this.pos);
+         } else {
+           this.remove();
+         }
+       }
+
     }
+
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 850, 950);
@@ -1562,7 +1593,7 @@ class MovingObject {
    }
 
    remove(){
-
+     debugger
      this.game.remove(this);
    }
 
