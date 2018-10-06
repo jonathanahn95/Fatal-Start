@@ -718,7 +718,7 @@ class Game {
    });
 
    key('p', () => {
-     this.intro = false;
+     this.introScore ++;
    }) ;
 
    key('y', () => {
@@ -733,6 +733,12 @@ class Game {
     this.addEnemies();
   }
 
+  setUp() {
+    if (this.introScore === 0){
+      this.instructions.draw(this.ctx);
+    }
+  }
+
   addDragonBalls() {
     for (var i = 0; i < this.NUM_DRAGON_BALLS; i++) {
       this.add(new _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, this.height), game: this, ctx: this.ctx , score: this.score}) );
@@ -741,7 +747,7 @@ class Game {
 
   addEnemies() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [2.7,2.7] }) );
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
     }
   }
 
@@ -813,7 +819,6 @@ class Game {
     } else if (obj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]){
       this.dragonBalls.push(obj);
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]){
-      debugger
       this.enemyBullets.push(obj);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]){
       this.sensuBeans.push(obj);
@@ -832,7 +837,6 @@ class Game {
       this.players.splice(this.players.indexOf(obj), 1);
       alert('Game Over');
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"]) {
-      debugger
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
       this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
@@ -850,14 +854,11 @@ class Game {
 
   draw() {
 
-    if (this.intro) {
-
-      this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 1){
-
+    if (this.introScore === 0) {
+    this.setUp();
+    }  else if (this.score.score === 20){
       this.dragonPage.draw(this.ctx);
-    } else if (this.introScore !== 0) {
-
+    } else {
       this.background.draw(this.ctx);
       this.hp.draw(this.ctx);
       this.score.draw(this.ctx);
