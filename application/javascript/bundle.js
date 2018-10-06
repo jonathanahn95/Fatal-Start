@@ -1319,8 +1319,8 @@ class Instructions {
       // ctx.fillText('Welcome To Fatal Start', 300,60);
       // ctx.strokeText('asasdsad', 300, 100);
       this.ctx.fillRect(0,0,900,600);
-      this.ctx.drawImage(this.text, -15, 10);
-      this.ctx.drawImage(this.image, 310, 10);
+      this.ctx.drawImage(this.text, 10, 10);
+      this.ctx.drawImage(this.image, 300, 10);
 
   }
 
