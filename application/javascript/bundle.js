@@ -255,11 +255,11 @@ class DragonPage {
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     };
-    debugger
+      
   }
 
   draw(ctx) {
-      debugger
+        
       ctx.clearRect(0,0, 900, 600);
       this.ctx.drawImage(this.image, 350, 350,100, 100);
       ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
@@ -705,6 +705,7 @@ class Game {
     this.bindKeyHandlers();
     this.intro = true;
     this.dragon = false;
+    this.introScore = 0;
   }
 
   bindKeyHandlers(){
@@ -717,7 +718,7 @@ class Game {
    });
 
    key('p', () => {
-     this.intro = false;
+     this.introScore+= 1;
    }) ;
 
    key('y', () => {
@@ -729,7 +730,7 @@ class Game {
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
     this.players.push(this.goku);
-    // this.addEnemies();
+    this.addEnemies();
   }
 
   addDragonBalls() {
@@ -740,7 +741,7 @@ class Game {
 
   addEnemies() {
     for (var i = 0; i < this.NUM_ENEMIES; i++) {
-      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
+      this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [2.7,2.7] }) );
     }
   }
 
@@ -847,11 +848,14 @@ class Game {
 
   draw() {
 
-    if (this.intro) {
+    if (this.introScore === 0) {
+      debugger
       this.instructions.draw(this.ctx);
-    }  else if (this.score.score === 20){
+    }  else if (this.score.score === 1){
+      debugger
       this.dragonPage.draw(this.ctx);
-    } else {
+    } else if (this.introScore !== 0) {
+      debugger
       this.background.draw(this.ctx);
       this.hp.draw(this.ctx);
       this.score.draw(this.ctx);
@@ -1201,6 +1205,7 @@ class Instructions {
     //   this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     // };
 
+    debugger
   }
 
   draw(ctx) {
@@ -1313,8 +1318,6 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
       window.frames1 = 0;
     }
     this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] -55  , this.pos[1] - 60 , 450, 450);
-    this.ctx.arc(450,450,35,0,2*Math.PI);
-    this.ctx.stroke();
   }
 
   remove(){
