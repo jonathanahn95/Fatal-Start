@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 60;
+      options.radius = 20;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -159,9 +159,18 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
       };
     }
 
+
     move(){
       this.pos[0] += this.vel[0];
       this.pos[1] += this.vel[1];
+      if (this.game.isOutOfBounds(this.pos)) {
+         if (this.isWrappable) {
+           this.pos = this.game.wrap(this.pos);
+         } else {
+           this.remove();
+         }
+       }
+
     }
 
     draw(ctx) {
@@ -302,7 +311,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 20;
+    options.radius = 30;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -532,7 +541,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Freiza extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 5;
+    options.radius = 25;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -878,13 +887,14 @@ class Game {
       this.dragonBalls.splice(this.dragonBalls.indexOf(obj), 1);
     } else if (obj instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] || obj instanceof _krillin__WEBPACK_IMPORTED_MODULE_13__["default"] || obj instanceof _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"] || obj instanceof _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]) {
       this.enemies.splice(this.enemies.indexOf(obj), 1);
-    } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"]) {
+      debugger
+    } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"] || obj instanceof _spirt_bomb__WEBPACK_IMPORTED_MODULE_12__["default"]) {
       this.bullets.splice(this.bullets.indexOf(obj), 1);
     } else if (obj.lives === 0 && obj instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"]) {
       obj.lives = 0;
       this.players.splice(this.players.indexOf(obj), 1);
       alert('Game Over');
-    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"] || obj instanceof _spirt_bomb__WEBPACK_IMPORTED_MODULE_12__["default"]) {
+    } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || obj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__["default"] || obj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__["default"] ) {
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
       this.sensuBeans.splice(this.sensuBeans.indexOf(obj),1);
@@ -901,23 +911,14 @@ class Game {
   }
 
   draw() {
+    this.background.draw(this.ctx);
+    this.hp.draw(this.ctx);
+    this.score.draw(this.ctx);
 
-    // if (this.introScore === 0) {
-    // this.setUp();
-    // }  else
+    this.allObjects().forEach( obj => {
+      obj.draw(this.ctx);
+    });
 
-
-    if (this.score.score === 20){
-      this.dragonPage.draw(this.ctx);
-    } else {
-      this.background.draw(this.ctx);
-      this.hp.draw(this.ctx);
-      this.score.draw(this.ctx);
-
-      this.allObjects().forEach( obj => {
-        obj.draw(this.ctx);
-      });
-    }
   }
 
   step() {
@@ -1109,7 +1110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   constructor(options) {
-    options.radius = 20;
+    options.radius = 30;
     options.vel = [0,0];
     super(options);
     this.ctx = options.ctx;
@@ -1119,9 +1120,8 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     this.game = options.game;
     this.image = new Image();
     this.image.src = 'assets/reg_goku.png';
-    this.image.onload= () => {
-      this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
-    };
+    this.superGoku = new Image();
+    this.superGoku.src = 'assets/supersaiyan-goku.png';
     this.game = options.game;
     this.bindKeyHandlers();
     this.lives = 3;
@@ -1189,8 +1189,12 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     // if (window.frames > 1200){
     //   window.frames = 0;
     // }
+    if (this.score.score >= 12) {
+      this.ctx.drawImage(this.superGoku, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -40 , 700, 700);
+    } else {
+      this.ctx.drawImage(this.image, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -70 , 700, 700);
 
-    this.ctx.drawImage(this.image, this.sX , 0, 800, 800, this.pos[0] - 50, this.pos[1] -40 , 700, 700);
+    }
 
   }
 
@@ -1203,17 +1207,24 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
 
 
   fireBullet() {
-    const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
-    this.game.add(bullet);
-  }
-
-  fireSpirtBomb() {
-    const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
-
-    if (this.score.score !== 0 && this.score.score % 7 === 0){
+    if (this.score.score >= 12){
+      const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
       this.game.add(spirtBomb);
+    } else {
+      const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+      this.game.add(bullet);
     }
+  
+
   }
+
+  // fireSpirtBomb() {
+  //   const spirtBomb = new SpirtBomb( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+  //
+  //   if (this.score.score !== 0 && this.score.score % 7 === 0){
+  //     this.game.add(spirtBomb);
+  //   }
+  // }
 
 
 
@@ -1355,7 +1366,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 20;
+    options.radius = 30;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -1414,7 +1425,7 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     if (window.frames1 > 170){
       window.frames1 = 0;
     }
-    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] -55  , this.pos[1] - 60 , 450, 450);
+    this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] -35  , this.pos[1] - 60 , 450, 450);
   }
 
   remove(){
@@ -1524,7 +1535,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(options) {
-    options.radius = 5;
+    options.radius = 25;
     super(options);
     this.vel = options.vel;
     this.ctx = options.ctx;
@@ -1759,7 +1770,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class SpirtBomb extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     constructor(options){
-      options.radius = 20;
+      options.radius = 50;
       super(options);
       this.pos = options.pos;
       this.vel = options.vel;
@@ -1776,12 +1787,20 @@ class SpirtBomb extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
     move(){
       this.pos[0] += this.vel[0];
       this.pos[1] += this.vel[1];
+      if (this.game.isOutOfBounds(this.pos)) {
+         if (this.isWrappable) {
+           this.pos = this.game.wrap(this.pos);
+         } else {
+           this.remove();
+         }
+       }
+
     }
 
     draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 400, 400, this.pos[0] - 50 , this.pos[1] + 120 , 550, 250);
-      this.ctx.arc(410,270,5,-130,2*Math.PI);
-      this.ctx.stroke();
+      this.ctx.drawImage(this.image, this.sX, 0, 1000, 1000, this.pos[0] - 50  , this.pos[1] - 70 , 650, 650);
+
+
     }
 
 
