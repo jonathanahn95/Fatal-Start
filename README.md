@@ -1,7 +1,7 @@
-# Fatal-Start - Proposal 
+# Fatal-Start  
+[Live!](http://fatal-start.jonahn.io/)
 
-## Background
-Fatal-Start is inspired by the classic Dragon Ball Z sries. The goal of Fatal-Start is to collect as many DragonBalls while staying alive. 
+![alt text](https://github.com/jonathanahn95/Fatal-Start/blob/master/assets/git_pic.png "Logo Title Text 1")
 
 
 ## MVP
@@ -34,3 +34,4 @@ attack and hit point relationships.
 `Day 4`: Finalize on how the game flows, fixing up minute details. Styling of frontend.
 
 
+!
