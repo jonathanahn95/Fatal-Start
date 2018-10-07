@@ -114,7 +114,6 @@ class Background {
     this.frames += 6;
     // ctx.drawImage(this.image,0,  -this.frames,600, 800);
     // ctx.drawImage(this.image,0,600 - this.frames, 600, 800);
-
     ctx.drawImage(this.image,0, 0, 1000, 800);
 
   }
@@ -144,38 +143,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
-    constructor(options){
-      options.radius = 20;
-      super(options);
-      this.pos = options.pos;
-      this.vel = options.vel;
-      this.ctx = options.ctx;
-      this.isWrappable = false;
-      this.game = options.game;
-      this.image = new Image();
-      this.image.src = 'assets/images/blast1.jpg';
-      this.image.onload= () => {
-        this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
-      };
-    }
+  constructor(options){
+    options.radius = 20;
+    super(options);
+    this.pos = options.pos;
+    this.vel = options.vel;
+    this.ctx = options.ctx;
+    this.isWrappable = false;
+    this.game = options.game;
+    this.image = new Image();
+    this.image.src = 'assets/images/blast1.jpg';
+    this.image.onload= () => {
+      this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
+    };
+  }
 
-
-    move(){
-      this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
-      if (this.game.isOutOfBounds(this.pos)) {
-         if (this.isWrappable) {
-           this.pos = this.game.wrap(this.pos);
-         } else {
-           this.remove();
-         }
+  move(){
+    this.pos[0] += this.vel[0];
+    this.pos[1] += this.vel[1];
+    if (this.game.isOutOfBounds(this.pos)) {
+       if (this.isWrappable) {
+         this.pos = this.game.wrap(this.pos);
+       } else {
+         this.remove();
        }
+     }
+  }
 
-    }
-
-    draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 30 , 250, 250);
-    }
+  draw(ctx) {
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 30 , 250, 250);
+  }
 
 
 }
@@ -209,7 +206,6 @@ const DEFAULTS = {
 
 class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]  {
   constructor(options){
-
     super(options);
     this.isWrappable = false;
     this.image = new Image();
@@ -240,49 +236,6 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (DragonBall);
-
-
-/***/ }),
-
-/***/ "./lib/dragon_page.js":
-/*!****************************!*\
-  !*** ./lib/dragon_page.js ***!
-  \****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-class DragonPage {
-  constructor(options){
-    this.ctx = options.ctx;
-    this.goku = options.goku;
-
-    this.image = new Image();
-    this.image.src = 'assets/images/super_goku.png';
-    this.image.onload= () => {
-      this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
-    };
-
-  }
-
-  draw(ctx) {
-    ctx.clearRect(0,0, 900, 600);
-    this.ctx.drawImage(this.image, 350, 350,100, 100);
-    ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
-    ctx.fillText("PRESS Y" , 80, 140);
-    ctx.font = "36px arial";
-    ctx.fillStyle = "yellow";
-    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.goku.pos[0] - 125 , this.goku.pos[1] - 90 , 950, 1150);
-  }
-
-
-
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (DragonPage);
 
 
 /***/ }),
@@ -373,13 +326,7 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
   }
 
   remove(){
-
     this.game.remove(this);
-    //
-    // this.sensuBean = new SensuBean( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
-    //
-    // this.game.add(this.sensuBean);
-
   }
 
 
@@ -413,38 +360,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
-    constructor(options){
-      options.radius = 20;
-      super(options);
-      this.pos = options.pos;
-      this.vel = options.vel;
-      this.ctx = options.ctx;
-      this.isWrappable = false;
-      this.game = options.game;
-      this.image = new Image();
-      this.image.src = 'assets/images/enemy_bullet.png';
-      this.image.onload= () => {
-        this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
-      };
-    }
+  constructor(options){
+    options.radius = 20;
+    super(options);
+    this.pos = options.pos;
+    this.vel = options.vel;
+    this.ctx = options.ctx;
+    this.isWrappable = false;
+    this.game = options.game;
+    this.image = new Image();
+    this.image.src = 'assets/images/enemy_bullet.png';
+    this.image.onload= () => {
+      this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
+    };
+  }
 
-    move(){
-      this.pos[0] += this.vel[0];
-      this.pos[1] += Math.abs(this.vel[1]);
-      if (this.game.isOutOfBounds(this.pos)) {
-         if (this.isWrappable) {
-           this.pos = this.game.wrap(this.pos);
-         } else {
-           this.remove();
-         }
-       }
-
-    }
-
-
-    draw(ctx) {
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 10 , 250, 250);
-    }
+  draw(ctx) {
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 20 , this.pos[1] - 10 , 250, 250);
+  }
 
 
 }
@@ -666,13 +599,10 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
            this.remove();
          }
        }
-
     }
-
 
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
-
     }
 
 
@@ -712,8 +642,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _freiza__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./freiza */ "./lib/freiza.js");
 /* harmony import */ var _krillin_bullet__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./krillin_bullet */ "./lib/krillin_bullet.js");
 /* harmony import */ var _freiza_bullet__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./freiza_bullet */ "./lib/freiza_bullet.js");
-/* harmony import */ var _dragon_page__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./dragon_page */ "./lib/dragon_page.js");
-
 
 
 
@@ -751,7 +679,6 @@ class Game {
     this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,450], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
     this.instructions = new _instructions__WEBPACK_IMPORTED_MODULE_11__["default"]({ ctx: this.ctx, goku: this.goku });
-    this.dragonPage = new _dragon_page__WEBPACK_IMPORTED_MODULE_18__["default"]({ ctx: this.ctx, goku: this.goku });
     this.initialSetup();
     this.audio = new Audio();
     this.audio.src = './assets/audio/rock_the_dragon.mp3';
@@ -1281,31 +1208,14 @@ class Instructions {
     this.image.src = 'assets/images/aura_goku.png';
     this.text = new Image();
     this.text.src = 'assets/images/intro_text.png';
-    // this.image = new Image();
-    // this.image.src = 'assets/super_goku.png';
-    // this.image.onload= () => {
-    //   this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
-    // };
-
-
   }
 
   draw(ctx) {
       ctx.clearRect(0,0, 900, 600);
-      // this.ctx.drawImage(this.image, 350, 350,100, 100);
-      // ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
-      // ctx.fillText("PRESS Y" , 80, 140);
-      // ctx.font = "36px arial";
-      // ctx.fillStyle = "yellow";
-
-      // ctx.clearRect(0,0, 900, 600);
       ctx.fillStyle = 'yellow';
-      // ctx.fillText('Welcome To Fatal Start', 300,60);
-      // ctx.strokeText('asasdsad', 300, 100);
       this.ctx.fillRect(0,0,900,600);
       this.ctx.drawImage(this.text, 10, 10);
       this.ctx.drawImage(this.image, 300, 10);
-
   }
 
 
@@ -1453,23 +1363,8 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
 
     }
 
-    move(){
-      this.pos[0] += this.vel[0];
-      this.pos[1] += Math.abs(this.vel[1]);
-      if (this.game.isOutOfBounds(this.pos)) {
-         if (this.isWrappable) {
-           this.pos = this.game.wrap(this.pos);
-         } else {
-           this.remove();
-         }
-       }
-
-    }
-
-
     draw(ctx) {
       this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 850, 950);
-
     }
 
 
@@ -1670,7 +1565,6 @@ class Score {
   }
 
   draw(ctx) {
-
     ctx.fillText("Dragon-Balls: "+this.score , 325, 40);
     ctx.font = "36px Impact";
     ctx.fillStyle = "yellow";
@@ -1710,21 +1604,6 @@ class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
   draw(ctx) {
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 50 , this.pos[1] - 30 , 250, 250);
-  }
-
-
-  move(){
-    this.pos[0] += this.vel[0];
-    this.pos[1] += Math.abs(this.vel[1]);
-
-    if (this.game.isOutOfBounds(this.pos)) {
-       if (this.isWrappable) {
-         this.pos = this.game.wrap(this.pos);
-       } else {
-         this.remove();
-       }
-     }
-
   }
 }
 
