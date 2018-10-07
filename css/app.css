@@ -103,7 +103,6 @@ html {
 
   /* background-color: #F0F8FF		; */
 
-  /* background-image: url('../assets/jake.jpg'); */
   background-size: 100% auto;
   background-repeat: no-repeat;
   height: 100%
@@ -113,7 +112,7 @@ html {
 }
 #canvas {
   border-radius: 5px;
-  background-image: url('../assets/Final.png');
+  background-image: url('../assets/images/Final.png');
   background-size: cover;
 
 }

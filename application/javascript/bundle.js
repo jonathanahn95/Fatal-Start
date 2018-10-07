@@ -99,7 +99,7 @@ class Background {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = 'assets/wall.jpg';
+    this.image.src = 'assets/images/wall.jpg';
     this.image.onload = () => {
       ctx.drawImage(this.image, 0, 0, 1000, 800);
     };
@@ -153,7 +153,7 @@ class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
       this.isWrappable = false;
       this.game = options.game;
       this.image = new Image();
-      this.image.src = 'assets/blast1.jpg';
+      this.image.src = 'assets/images/blast1.jpg';
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
@@ -214,7 +214,7 @@ class DragonBall extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] 
     this.isWrappable = false;
     this.image = new Image();
     this.score = options.score;
-    this.image.src = 'assets/pix-drag.png';
+    this.image.src = 'assets/images/pix-drag.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -260,23 +260,21 @@ class DragonPage {
     this.goku = options.goku;
 
     this.image = new Image();
-    this.image.src = 'assets/super_goku.png';
+    this.image.src = 'assets/images/super_goku.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.goku.pos[0], this.goku.pos[1]);
     };
-      
+
   }
 
   draw(ctx) {
-        
-      ctx.clearRect(0,0, 900, 600);
-      this.ctx.drawImage(this.image, 350, 350,100, 100);
-      ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
-      ctx.fillText("PRESS Y" , 80, 140);
-      ctx.font = "36px arial";
-      ctx.fillStyle = "yellow";
-      this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.goku.pos[0] - 125 , this.goku.pos[1] - 90 , 950, 1150);
-
+    ctx.clearRect(0,0, 900, 600);
+    this.ctx.drawImage(this.image, 350, 350,100, 100);
+    ctx.fillText("WOULD YOU LIKE TO TURN SUPER SAIYAN?" , 80, 60);
+    ctx.fillText("PRESS Y" , 80, 140);
+    ctx.font = "36px arial";
+    ctx.fillStyle = "yellow";
+    this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.goku.pos[0] - 125 , this.goku.pos[1] - 90 , 950, 1150);
   }
 
 
@@ -319,7 +317,7 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/vegeta.png';
+    this.image.src = 'assets/images/vegeta.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -424,7 +422,7 @@ class EnemyBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"]
       this.isWrappable = false;
       this.game = options.game;
       this.image = new Image();
-      this.image.src = 'assets/enemy_bullet.png';
+      this.image.src = 'assets/images/enemy_bullet.png';
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
@@ -551,7 +549,7 @@ class Freiza extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/frieza.jpg';
+    this.image.src = 'assets/images/frieza.jpg';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -651,7 +649,7 @@ class FreizaBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"
       this.isWrappable = false;
       this.game = options.game;
       this.image = new Image();
-      this.image.src = './assets/spirit-bomb.jpg';
+      this.image.src = './assets/images/spirit-bomb.jpg';
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
@@ -756,7 +754,7 @@ class Game {
     this.dragonPage = new _dragon_page__WEBPACK_IMPORTED_MODULE_18__["default"]({ ctx: this.ctx, goku: this.goku });
     this.initialSetup();
     this.audio = new Audio();
-    this.audio.src = './assets/rock_the_dragon.mp3';
+    this.audio.src = './assets/audio/rock_the_dragon.mp3';
     this.audio.play();
     this.bindKeyHandlers();
     this.intro = true;
@@ -904,7 +902,6 @@ class Game {
     this.background.draw(this.ctx);
     this.hp.draw(this.ctx);
     this.score.draw(this.ctx);
-
     this.allObjects().forEach( obj => {
       obj.draw(this.ctx);
     });
@@ -1113,9 +1110,9 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     this.isWrappable = false;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/reg_goku.png';
+    this.image.src = 'assets/images/reg_goku.png';
     this.superGoku = new Image();
-    this.superGoku.src = 'assets/supersaiyan-goku.png';
+    this.superGoku.src = 'assets/images/supersaiyan-goku.png';
     this.game = options.game;
     this.bindKeyHandlers();
     this.lives = 3;
@@ -1257,20 +1254,7 @@ class Hp {
   }
 
   draw(ctx) {
-
-    // if (this.player.lives === 1) {
-        ctx.fillText("HP: "+this.player.lives , 750, 40);
-    //   ctx.fillRect(770,20,150,100);
-    // } else {
-    //   ctx.fillText("HP: "+this.player.lives , 750, 40);
-    //   ctx.fillRect(770,20,100,100);
-    // }
-
-    // ctx.strokeStyle="red";
-    // ctx.font = "36px Saiyan Sans";
-    // ctx.fillStyle = "yellow";
-    // ctx.stroke();
-
+    ctx.fillText("HP: "+this.player.lives , 750, 40);
   }
 }
 
@@ -1294,9 +1278,9 @@ class Instructions {
     this.ctx = options.ctx;
     this.goku = options.goku;
     this.image = new Image();
-    this.image.src = 'assets/aura_goku.png';
+    this.image.src = 'assets/images/aura_goku.png';
     this.text = new Image();
-    this.text.src = 'assets/intro_text.png';
+    this.text.src = 'assets/images/intro_text.png';
     // this.image = new Image();
     // this.image.src = 'assets/super_goku.png';
     // this.image.onload= () => {
@@ -1364,7 +1348,7 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/krillin.png';
+    this.image.src = 'assets/images/krillin.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -1420,11 +1404,6 @@ class Krillin extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   remove(){
     this.game.remove(this);
-    // this.sensuBean = new SensuBean( { pos: this.pos, vel: [0,-5], ctx: this.ctx, game: this.game} );
-    //
-    // this.game.add(this.sensuBean);
-
-    // this.sensuBean.draw(this.ctx);
   }
 
 
@@ -1467,7 +1446,7 @@ class KrillinBullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default
       this.isWrappable = false;
       this.game = options.game;
       this.image = new Image();
-      this.image.src = 'assets/krillen_bullet.png';
+      this.image.src = 'assets/images/krillen_bullet.png';
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
@@ -1533,7 +1512,7 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.sX = 0;
     this.game = options.game;
     this.image = new Image();
-    this.image.src = 'assets/buu.png';
+    this.image.src = 'assets/images/buu.png';
     this.image.onload= () => {
       this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
     };
@@ -1589,8 +1568,6 @@ class MajinBu extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   remove(){
     this.game.remove(this);
-  
-    // this.sensuBean.draw(this.ctx);
   }
 
 
@@ -1726,9 +1703,9 @@ class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.isWrappable = false;
     this.image = new Image();
     this.game = options.game;
-    this.image.src = 'assets/sensju.jpg';
+    this.image.src = 'assets/images/sensju.jpg';
 
-     
+
   }
 
   draw(ctx) {
@@ -1739,7 +1716,7 @@ class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
   move(){
     this.pos[0] += this.vel[0];
     this.pos[1] += Math.abs(this.vel[1]);
-     
+
     if (this.game.isOutOfBounds(this.pos)) {
        if (this.isWrappable) {
          this.pos = this.game.wrap(this.pos);
@@ -1783,7 +1760,7 @@ class SpirtBomb extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
       this.isWrappable = false;
       this.game = options.game;
       this.image = new Image();
-      this.image.src = './assets/spirit-bomb.jpg';
+      this.image.src = './assets/images/spirit-bomb.jpg';
       this.image.onload= () => {
         this.ctx.drawImage(this.image, this.pos[0], this.pos[1]);
       };
