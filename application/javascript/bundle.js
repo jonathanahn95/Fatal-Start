@@ -748,7 +748,7 @@ class Game {
     this.sensuBeans = [];
     this.width = 900;
     this.height = 600;
-    this.NUM_DRAGON_BALLS = 4;
+    this.NUM_DRAGON_BALLS = 5;
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
     this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,450], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
