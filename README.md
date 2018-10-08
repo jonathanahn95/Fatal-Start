@@ -32,9 +32,59 @@ Enemy movements are calculated by incrementing or decrementing the current enemi
     window.frames1 += 1;
   }
 ```
+### Goku
+Bullets are calculated by decrementing the `score` by one any time a player fires a `bullet`. Depending on whether Goku is in normal form or super-saiyan will determine the type of `bullets` that will shoot.
+``` javascript
+  fireBullet() {
+    if (this.score.dragonBalls != 0){
+      if (this.score.points >= 1750){
+        const spirtBomb = new SpirtBomb( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+        this.game.add(spirtBomb);
+      } else {
+        const bullet = new Bullet( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
+        this.game.add(bullet);
+      }
+      this.score.dragonBalls -= 1;
+    }
+  }
+
+  ```
+  
+ ### Key Handlers
+ Fatal-Start uses Keymaster, which is a simple micro-library for defining and dispatching keyboard shortcuts in web applications. It stores a global master `key` on the window and allows it to be called inside `bindKeyHandlers` so whenever a specfic `key` is pressed, the callback occurs.
 
 
-## Future Implementation
+ ```javascript
+   bindKeyHandlers() {
+    key('w', () => {
+      this.vel = [0, -6];
+      this.move();
+    });
+
+    key('s', () => {
+      this.vel = [0, 6];
+      this.move();
+    });
+
+    key('a', () => {
+      this.vel = [-6, 0];
+      this.move();
+    });
+
+    key('d', () => {
+      this.vel = [6, 0];
+      this.move();
+    });
+
+    key('j', () => {
+      this.fireBullet();
+    });
+  }
+```
+  
+ 
+
+## Future Implementations
 
 ### Sprites
 Add sprite animations for when objects collide and smoother transition for Goku turning super-saiyan.
