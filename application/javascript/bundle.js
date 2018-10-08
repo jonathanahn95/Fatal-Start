@@ -391,7 +391,6 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
   window.intro = false;
 
   const startGame = () => {
@@ -423,15 +422,10 @@ document.addEventListener("DOMContentLoaded", () => {
   span.onclick = function(event) {
       modal.style.display = 'none';
       window.intro = true;
-    if ( window.intro === true) {
+      if ( window.intro) {
         startGame();
       }
   };
-
-
-
-
-
 });
 
 
@@ -618,6 +612,7 @@ class Game {
     this.audio = new Audio();
     this.audio.src = './assets/audio/rock_the_dragon.mp3';
     this.audio.play();
+    this.gameOver = false;
     this.bindKeyHandlers();
   }
 
@@ -639,7 +634,7 @@ class Game {
   }
 
   addSensuBean() {
-    if (this.score.score != 0 && this.sensuBeans.length >= 0 && this.sensuBeans.length < 1 && this.score.score % 5 === 0){
+    if ( this.score.dragonBalls !== 0 && this.sensuBeans.length >= 0 && this.sensuBeans.length < 1 && this.score.dragonBalls % 5 === 0){
       const sensuBean = new _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, this.height), vel: [0,-5], ctx: this.ctx, game: this} );
       setInterval(function(){
         sensuBean.game.add(sensuBean);
@@ -797,7 +792,30 @@ __webpack_require__.r(__webpack_exports__);
 class GameView {
   constructor(game, ctx){
     this.game = game;
+    this.goku = game.goku;
     this.ctx = ctx;
+    this.play = true;
+    this.bindKeyHandlers();
+  }
+
+
+  bindKeyHandlers(){
+    key('p', () => {
+      this.changePlayBoolean();
+   });
+
+    key('n', () => {
+      this.restartGame();
+   });
+  }
+
+  changePlayBoolean(){
+    if (this.play === true){
+      this.play = false;
+    } else {
+      this.play = true;
+      this.animate();
+    }
   }
 
   start() {
@@ -805,13 +823,20 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
+
   animate(time) {
-   const timeDelta = time - this.lastTime;
-   this.game.step(timeDelta);
-   this.game.draw(this.ctx);
-   this.lastTime = time;
-   // every call to animate requests causes another call to animate
-   requestAnimationFrame(this.animate.bind(this));
+    if (this.play === true && this.goku.lives > 0){
+      this.animateFrames(time);
+    }
+   }
+
+   animateFrames(time) {
+     const timeDelta = time - this.lastTime;
+     this.game.step(timeDelta);
+     this.game.draw(this.ctx);
+     this.lastTime = time;
+     // every call to animate requests causes another call to animate
+     requestAnimationFrame(this.animate.bind(this));
    }
 }
 
@@ -984,7 +1009,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
    }
 
   fireBullet() {
-    if (this.score.score != 0){
+    if (this.score.dragonBalls != 0){
       if (this.score.points >= 1750){
         const spirtBomb = new _spirt_bomb__WEBPACK_IMPORTED_MODULE_6__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
         this.game.add(spirtBomb);
@@ -992,7 +1017,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
         const bullet = new _bullet__WEBPACK_IMPORTED_MODULE_1__["default"]( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
         this.game.add(bullet);
       }
-      this.score.score -= 1;
+      this.score.dragonBalls -= 1;
     }
   }
 
@@ -1002,7 +1027,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
     } else if (otherObj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_5__["default"] && this.lives <= 2){
       this.lives++;
     } else if (otherObj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_0__["default"]){
-      this.score.score += 1;
+      this.score.dragonBalls += 1;
     }
     otherObj.remove();
   }
@@ -1330,12 +1355,12 @@ class MovingObject {
 __webpack_require__.r(__webpack_exports__);
 class Score {
   constructor(score){
-    this.score = score;
+    this.dragonBalls = score;
     this.points = 0;
   }
 
   draw(ctx) {
-    ctx.fillText("Dragon-Balls: "+this.score , 325, 40);
+    ctx.fillText("Dragon-Balls: "+this.dragonBalls , 325, 40);
     ctx.font = "36px Impact";
     ctx.fillStyle = "yellow";
     ctx.fillText("Score: "+this.points ,15, 40);
