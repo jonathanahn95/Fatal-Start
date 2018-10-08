@@ -83,7 +83,7 @@ Bullets are calculated by decrementing the `score` by one any time a player fire
   
  
 
-## Future Implementation
+## Future Implementations
 
 ### Sprites
 Add sprite animations for when objects collide and smoother transition for Goku turning super-saiyan.
