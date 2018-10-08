@@ -36,7 +36,7 @@ Enemy movements are calculated by incrementing or decrementing the current enemi
 Bullets are calculated by decrementing the `score` by one any time a player fires a `bullet`. Depending on whether Goku is in normal form or super-saiyan will determine the type of `bullets` that will shoot.
 ``` javascript
   fireBullet() {
-    if (this.score.score != 0){
+    if (this.score.dragonBalls != 0){
       if (this.score.points >= 1750){
         const spirtBomb = new SpirtBomb( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
         this.game.add(spirtBomb);
@@ -44,9 +44,10 @@ Bullets are calculated by decrementing the `score` by one any time a player fire
         const bullet = new Bullet( {pos: this.pos, vel: [0,-6], ctx: this.ctx, game: this.game } );
         this.game.add(bullet);
       }
-      this.score.score -= 1;
+      this.score.dragonBalls -= 1;
     }
   }
+
   ```
   
  ### Key Handlers
