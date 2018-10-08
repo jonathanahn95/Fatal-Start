@@ -657,6 +657,8 @@ class Game {
         } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] && obj1.isCollidedWith(obj2)){
           obj1.collideWith(obj2);
           obj2.collideWith(obj1);
+        } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"] && obj1.isCollidedWith(obj2)){
+          obj1.collideWith(obj2);
         } else if (obj1 !== obj2 && obj1 instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"] && obj2 instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"] && obj1.isCollidedWith(obj2)){
           obj1.collideWith(obj2);
         }
@@ -909,6 +911,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _score__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./score */ "./lib/score.js");
 /* harmony import */ var _krillin_bullet__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./krillin_bullet */ "./lib/krillin_bullet.js");
 /* harmony import */ var _freiza_bullet__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./freiza_bullet */ "./lib/freiza_bullet.js");
+/* harmony import */ var _enemy__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./enemy */ "./lib/enemy.js");
+
 
 
 
@@ -1022,7 +1026,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   }
 
   collideWith(otherObj) {
-    if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"]){
+    if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"] || otherObj instanceof _enemy__WEBPACK_IMPORTED_MODULE_10__["default"]){
       this.lives-= 1;
     } else if (otherObj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_5__["default"] && this.lives <= 2){
       this.lives++;
