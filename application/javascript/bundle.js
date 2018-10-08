@@ -598,7 +598,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 class Game {
   constructor(ctx){
     this.ctx = ctx;
@@ -727,17 +726,18 @@ class Game {
   }
 
   addEnemies() {
-    if (this.score.points <= 500){
+    const score = this.score.points;
+    if (score <= 500){
       for (var i = 0; i < 2; i++) {
         this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
       }
       return;
-    } else if ( this.score.points <= 1000){
+    } else if ( score <= 1000){
       for (var j = 0; j < 2; j++) {
         this.add(new _krillin__WEBPACK_IMPORTED_MODULE_13__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.1,1.1] }) );
       }
       return;
-    } else if ( this.score.points <= 1500){
+    } else if ( score <= 1500){
       for (var k = 0; k < 2; k++) {
         this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.3,1.3] }) );
       }
@@ -757,8 +757,6 @@ class Game {
     this.allObjects().forEach( obj => {
       obj.move();
     });
-    this.obstacleTimer += Math.floor(Math.random() * 10);
-
   }
 
   spawnDragonBalls() {
@@ -999,7 +997,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
   }
 
   collideWith(otherObj) {
-    if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"] || otherObj instanceof _krillin_bullet__WEBPACK_IMPORTED_MODULE_8__["default"] || otherObj instanceof _freiza_bullet__WEBPACK_IMPORTED_MODULE_9__["default"]){
+    if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"]){
       this.lives-= 1;
     } else if (otherObj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_5__["default"] && this.lives <= 2){
       this.lives++;
@@ -1283,7 +1281,6 @@ class MovingObject {
   }
 
   draw(ctx) {
-
   }
 
   move(){
@@ -1296,7 +1293,6 @@ class MovingObject {
          this.remove();
        }
      }
-
   }
 
   isCollidedWith(otherObj) {
@@ -1372,8 +1368,6 @@ class SensuBean extends _moving_object__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.image = new Image();
     this.game = options.game;
     this.image.src = 'assets/images/sensju.jpg';
-
-
   }
 
   draw(ctx) {
@@ -1477,7 +1471,6 @@ const scale = (vec, m) => {
 //
 
 const randomPosition = (maxX, maxY) => {
-  //
   const x = maxX * Math.random();
   const y = maxY * 0.5 * Math.random();
   return [x, y];
