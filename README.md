@@ -1,7 +1,7 @@
 # Fatal-Start  
 [Live!](http://fatal-start.jonahn.io/)
 
-![alt text](https://github.com/jonathanahn95/Fatal-Start/blob/master/assets/git_pic.png "Logo Title Text 1")
+![alt text](https://github.com/jonathanahn95/Fatal-Start/blob/master/assets/images/git_pic.png "Logo Title Text 1")
 
 Fatal-Start is a side-scroller browser game inspired by the classic tv series Dragon Ball Z. The objective of the game is to help Goku defeat the enemies and survive as long as possible.
 
@@ -10,8 +10,29 @@ Fatal-Start is built using ES6 syntax JavaScript and HTML5 canvas to render elem
 
 
 ## Features
-This app will consist of a single screen with a header that consists of my name email, game name, and nav links to the 
-to the Github, my LinkedIn, and personal website. It will have a modal about the game instructions. Game controls will include W,S,A,D to move and left click on the mouse to attack.
+### Enemy Movements
+Enemy movements are calculated by incrementing or decrementing the current enemies `position` by its own `velocity` depending on Goku's `position`.
+
+```javascript
+  move(){
+    if (this.goku.pos[0] > this.pos[0]) {
+      this.pos[0] += this.vel[0];
+    }
+    else if (this.goku.pos[0] < this.pos[0]) {
+      this.pos[0] -= this.vel[0];
+    }
+     if (this.goku.pos[1] > this.pos[1]) {
+      this.pos[1] += this.vel[1];
+    }
+    else if (this.goku.pos[1] < this.pos[1]) {
+      this.pos[1] -= this.vel[1];
+    }
+
+    this.pos = this.game.wrap(this.pos);
+    window.frames1 += 1;
+  }
+```
+
 
 ## Future Implementation
 
