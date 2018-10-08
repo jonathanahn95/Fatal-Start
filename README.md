@@ -50,7 +50,7 @@ Bullets are calculated by decrementing the `score` by one any time a player fire
   ```
   
  ### Key Handlers
- Fatal-Start uses Keymaster, which is a simple micro-library for defining and dispatching keyboard shortcuts in web applications. It stores a global master `key` on the window and allows it to be called inside bindKeyHandlers so whenever a specfic key is pressed, the callback occurs.
+ Fatal-Start uses Keymaster, which is a simple micro-library for defining and dispatching keyboard shortcuts in web applications. It stores a global master `key` on the window and allows it to be called inside `bindKeyHandlers` so whenever a specfic `key` is pressed, the callback occurs.
 
 
  ```javascript
