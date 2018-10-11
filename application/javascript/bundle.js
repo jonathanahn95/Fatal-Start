@@ -302,18 +302,22 @@ class Enemy extends _moving_object__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.game.add(bullet);
   }
 
-  draw(ctx) {
-    switch(window.frames1) {
-      case 170:
-      this.fireBullet();
-      break;
-      default:
-      break;
-    }
+  // draw(ctx) {
+  //   switch(window.frames1) {
+  //     case (window.frames1 ):
+  //     this.fireBullet();
+  //     break;
+  //     default:
+  //     break;
+  //   }
+  //
+  //   if (window.frames1 > 170){
+  //     window.frames1 = 0;
+  //   }
+  //   this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 55 , this.pos[1] - 60 , 500, 500);
+  // }
 
-    if (window.frames1 > 170){
-      window.frames1 = 0;
-    }
+  draw(ctx) {
     this.ctx.drawImage(this.image, this.sX, 0, 800, 800, this.pos[0] - 55 , this.pos[1] - 60 , 500, 500);
   }
 
@@ -608,12 +612,14 @@ class Game {
     this.score = new _score__WEBPACK_IMPORTED_MODULE_6__["default"](0);
     this.goku = new _goku__WEBPACK_IMPORTED_MODULE_3__["default"]( {pos: [450,450], game: this, ctx: this.ctx , score: this.score} );
     this.hp = new _hp__WEBPACK_IMPORTED_MODULE_9__["default"](this.goku);
+    this.timer = 1;
     this.initialSetup();
     this.audio = new Audio();
     this.audio.src = './assets/audio/rock_the_dragon.mp3';
     this.audio.play();
     this.gameOver = false;
     this.bindKeyHandlers();
+    this.keepTime = this.keepTime.bind(this);
   }
 
   bindKeyHandlers(){
@@ -627,10 +633,23 @@ class Game {
   }
 
   initialSetup() {
+    this.timer = 1;
     this.ctx.clearRect(0,0, 800, 800);
     this.addDragonBalls();
     this.players.push(this.goku);
     this.addEnemies();
+    this.keepTime();
+  }
+
+  keepTime(){
+    let timer = setInterval(() => {
+      this.timer++;
+      if (this.timer % 3 === 0){
+        this.enemies.forEach( enemy => {
+          enemy.fireBullet();
+        });
+      }
+    }, 1000);
   }
 
   addSensuBean() {
@@ -729,7 +748,7 @@ class Game {
       }
       return;
     } else if ( score <= 1000){
-      for (var j = 0; j < 2; j++) {
+      for (var j = 0; j < 4; j++) {
         this.add(new _krillin__WEBPACK_IMPORTED_MODULE_13__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.1,1.1] }) );
       }
       return;
