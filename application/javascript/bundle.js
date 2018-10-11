@@ -724,7 +724,7 @@ class Game {
   addEnemies() {
     const score = this.score.points;
     if (score <= 500){
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < 2; i++) {
         this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
       }
       return;
