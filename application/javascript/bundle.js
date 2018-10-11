@@ -683,14 +683,13 @@ class Game {
   remove(obj) {
     if (obj instanceof _dragon_ball__WEBPACK_IMPORTED_MODULE_2__["default"]) {
       this.dragonBalls.splice(this.dragonBalls.indexOf(obj), 1);
+    } else if (this.goku.lives === 0) {
+      this.players.splice(this.players.indexOf(obj), 1);
+      alert('Game Over');
     } else if (obj instanceof _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]) {
       this.enemies.splice(this.enemies.indexOf(obj), 1);
     } else if (obj instanceof _bullet__WEBPACK_IMPORTED_MODULE_7__["default"]) {
       this.bullets.splice(this.bullets.indexOf(obj), 1);
-    } else if (obj.lives === 0 && obj instanceof _goku__WEBPACK_IMPORTED_MODULE_3__["default"]) {
-      obj.lives = 0;
-      this.players.splice(this.players.indexOf(obj), 1);
-      alert('Game Over');
     } else if (obj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_8__["default"]) {
       this.enemyBullets.splice(this.enemyBullets.indexOf(obj), 1);
     } else if (obj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_10__["default"]) {
@@ -725,7 +724,7 @@ class Game {
   addEnemies() {
     const score = this.score.points;
     if (score <= 500){
-      for (var i = 0; i < 2; i++) {
+      for (var i = 0; i < 4; i++) {
         this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
       }
       return;
@@ -1027,6 +1026,7 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
 
   collideWith(otherObj) {
     if (otherObj instanceof _enemy_bullet__WEBPACK_IMPORTED_MODULE_4__["default"] || otherObj instanceof _enemy__WEBPACK_IMPORTED_MODULE_10__["default"]){
+
       this.lives-= 1;
     } else if (otherObj instanceof _sensu_bean__WEBPACK_IMPORTED_MODULE_5__["default"] && this.lives <= 2){
       this.lives++;
