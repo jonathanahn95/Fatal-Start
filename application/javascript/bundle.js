@@ -484,13 +484,13 @@ class Freiza extends _enemy__WEBPACK_IMPORTED_MODULE_5__["default"] {
 
   draw(ctx) {
     switch(window.frames1) {
-      case 170:
+      case 240:
       this.fireBullet();
       break;
       default:
       break;
     }
-    if (window.frames1 > 170){
+    if (window.frames1 > 240){
       window.frames1 = 0;
     }
     this.ctx.drawImage(this.image, this.sX, 0, 1200, 1200, this.pos[0] - 45 , this.pos[1] - 130 , 950, 1150);
@@ -753,12 +753,12 @@ class Game {
       }
       return;
     } else if ( score <= 1500){
-      for (var k = 0; k < 2; k++) {
+      for (var k = 0; k < 3; k++) {
         this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.3,1.3] }) );
       }
       return;
     } else  {
-      for (var l = 0; l < 2; l++) {
+      for (var l = 0; l < 4; l++) {
         this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.5,1.5] }) );
       }
     }
