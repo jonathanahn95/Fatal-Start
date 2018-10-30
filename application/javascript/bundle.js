@@ -141,7 +141,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 class Bullet extends _moving_object__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor(options){
     options.radius = 20;
@@ -744,22 +743,22 @@ class Game {
     const score = this.score.points;
     if (score <= 500){
       for (var i = 0; i < 2; i++) {
-        this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.7,0.7] }) );
+        this.add(new _enemy__WEBPACK_IMPORTED_MODULE_4__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.5,0.5] }) );
       }
       return;
     } else if ( score <= 1000){
       for (var j = 0; j < 4; j++) {
-        this.add(new _krillin__WEBPACK_IMPORTED_MODULE_13__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.1,1.1] }) );
+        this.add(new _krillin__WEBPACK_IMPORTED_MODULE_13__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.6,0.6] }) );
       }
       return;
     } else if ( score <= 1500){
       for (var k = 0; k < 3; k++) {
-        this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.3,1.3] }) );
+        this.add(new _majin_bu__WEBPACK_IMPORTED_MODULE_14__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.6,0.6] }) );
       }
       return;
     } else  {
       for (var l = 0; l < 3; l++) {
-        this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [1.5,1.5] }) );
+        this.add(new _freiza__WEBPACK_IMPORTED_MODULE_15__["default"]( { pos: Object(_util__WEBPACK_IMPORTED_MODULE_0__["randomPosition"])(this.width, 200), ctx: this.ctx, game: this, goku: this.goku, vel: [0.8,0.8] }) );
       }
     }
   }
@@ -963,25 +962,25 @@ class Goku extends _moving_object__WEBPACK_IMPORTED_MODULE_3__["default"] {
 
   bindKeyHandlers() {
     key('w', () => {
-      this.vel = [0, -6];
+      this.vel = [0, -4];
       // this.pos[1] -= 40;
       this.move();
     });
 
     key('s', () => {
-      this.vel = [0, 6];
+      this.vel = [0, 4];
       // this.pos[1] += 40;
       this.move();
     });
 
     key('a', () => {
-      this.vel = [-6, 0];
+      this.vel = [-4, 0];
       // this.pos[0] -= 40;
       this.move();
     });
 
     key('d', () => {
-      this.vel = [6, 0];
+      this.vel = [4, 0];
       // this.pos[0] += 40;
 
       this.move();
