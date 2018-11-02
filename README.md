@@ -57,22 +57,22 @@ Bullets are calculated by decrementing the `score` by one any time a player fire
  ```javascript
    bindKeyHandlers() {
     key('w', () => {
-      this.vel = [0, -6];
+      this.vel = [0, -4];
       this.move();
     });
 
     key('s', () => {
-      this.vel = [0, 6];
+      this.vel = [0, 4];
       this.move();
     });
 
     key('a', () => {
-      this.vel = [-6, 0];
+      this.vel = [-4, 0];
       this.move();
     });
 
     key('d', () => {
-      this.vel = [6, 0];
+      this.vel = [4, 0];
       this.move();
     });
 
