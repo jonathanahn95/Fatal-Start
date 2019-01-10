@@ -1,7 +1,7 @@
 # Fatal-Start  
 [Live!](http://fatal-start.jonahn.io/)
 
-![alt text](https://github.com/jonathanahn95/Fatal-Start/blob/master/assets/images/git_pic.png "Logo Title Text 1")
+![](start.gif	)
 
 Fatal-Start is a side-scroller browser game inspired by the classic tv series Dragon Ball Z. The objective of the game is to help Goku defeat the enemies and survive as long as possible.
 
